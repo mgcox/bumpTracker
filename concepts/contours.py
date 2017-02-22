@@ -1,3 +1,5 @@
+# http://docs.opencv.org/3.2.0/d4/d73/tutorial_py_contours_begin.html
+
 import numpy as np
 import cv2
 import sys 
