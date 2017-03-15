@@ -19,6 +19,15 @@ contours = sorted(contours, key = cv2.contourArea, reverse = True)[:10]
 
 M = cv2.moments(contours[0])
 print(M)
+cx = int(M['m10']/M['m00'])
+cy = int(M['m01']/M['m00'])
+print(cx)
+print(cy)
+im[cy][cx] = [0, 255, 0]
+im[cy+1][cx] = [0, 255, 0]
+im[cy][cx+1] = [0, 255, 0]
+im[cy+1][cx+1] = [0, 255, 0]
+print(im[cx][cy])
 # rows,cols = im.shape[:2]
 # [vx,vy,x,y] = cv2.fitLine((contours[0]), cv2.DIST_L2,0,0.01,0.01)
 # print([vx,vy,x,y])
@@ -35,5 +44,5 @@ print(M)
 #   print("Move left!")
 
 # Print the diagnostic file for output
-cv2.imwrite(sys.argv[2], im)
+#cv2.imwrite(sys.argv[2], im)
 
