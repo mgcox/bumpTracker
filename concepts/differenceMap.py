@@ -1,5 +1,3 @@
-# http://docs.opencv.org/3.2.0/d4/d73/tutorial_py_contours_begin.html
-
 import numpy as np
 import cv2
 import sys 
@@ -22,7 +20,7 @@ contours = sorted(contours, key = cv2.contourArea, reverse = True)[:10]
 # print('Center x: {0}'.format(x + (vx/2)))
 center = (x + (vx/2))
 contours[0] = list(filter(lambda el: el[0][0] > center, contours[0]))
-# contours[0] = [el if el[0][0] > center for el in contours[0]]
+
 # print(contours[0])
 c = cv2.drawContours(im, contours[0], -1, (0,255,0), 3)
 
