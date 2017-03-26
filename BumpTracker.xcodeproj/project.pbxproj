@@ -15,6 +15,7 @@
 		949ACE7C1E54D556005FCC71 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 949ACE7A1E54D556005FCC71 /* LaunchScreen.storyboard */; };
 		949ACE871E54D556005FCC71 /* BumpTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949ACE861E54D556005FCC71 /* BumpTrackerTests.swift */; };
 		949ACE921E54D556005FCC71 /* BumpTrackerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949ACE911E54D556005FCC71 /* BumpTrackerUITests.swift */; };
+		949EA2361E82E3CC0045C1FA /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949EA2351E82E3CC0045C1FA /* CameraViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		949ACE8D1E54D556005FCC71 /* BumpTrackerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BumpTrackerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		949ACE911E54D556005FCC71 /* BumpTrackerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BumpTrackerUITests.swift; sourceTree = "<group>"; };
 		949ACE931E54D556005FCC71 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		949EA2351E82E3CC0045C1FA /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,6 +104,7 @@
 				949ACE6E1E54D555005FCC71 /* AppDelegate.swift */,
 				949ACE701E54D555005FCC71 /* ViewController.swift */,
 				949ACE721E54D555005FCC71 /* Main.storyboard */,
+				949EA2351E82E3CC0045C1FA /* CameraViewController.swift */,
 				949ACE781E54D555005FCC71 /* Assets.xcassets */,
 				949ACE7A1E54D556005FCC71 /* LaunchScreen.storyboard */,
 				949ACE7D1E54D556005FCC71 /* Info.plist */,
@@ -266,6 +269,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				949ACE711E54D555005FCC71 /* ViewController.swift in Sources */,
+				949EA2361E82E3CC0045C1FA /* CameraViewController.swift in Sources */,
 				949ACE6F1E54D555005FCC71 /* AppDelegate.swift in Sources */,
 				949ACE771E54D555005FCC71 /* BumpTracker.xcdatamodeld in Sources */,
 			);
@@ -518,6 +522,7 @@
 				949ACE981E54D556005FCC71 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		949ACE991E54D556005FCC71 /* Build configuration list for PBXNativeTarget "BumpTrackerTests" */ = {
 			isa = XCConfigurationList;
@@ -526,6 +531,7 @@
 				949ACE9B1E54D556005FCC71 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		949ACE9C1E54D556005FCC71 /* Build configuration list for PBXNativeTarget "BumpTrackerUITests" */ = {
 			isa = XCConfigurationList;
@@ -534,6 +540,7 @@
 				949ACE9E1E54D556005FCC71 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

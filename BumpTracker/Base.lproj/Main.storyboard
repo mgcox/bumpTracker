@@ -1,14 +1,19 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11134" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11106"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="BumpTracker" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -16,11 +21,122 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hvf-D9-Qx3">
+                                <rect key="frame" x="62" y="583" width="251" height="56"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Take Photo"/>
+                                <connections>
+                                    <action selector="takePhotoButtonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="QfV-1m-OZn"/>
+                                    <segue destination="IiC-ai-q3o" kind="show" id="Off-bh-MS8"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Bump Tracker" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="e9F-oT-ACw">
+                                <rect key="frame" x="117" y="28" width="140" height="51"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Week" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Bw-rv-fvW">
+                                <rect key="frame" x="134" y="108" width="106" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="4" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lh7-l2-bV6">
+                                <rect key="frame" x="16" y="156" width="343" height="137"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="83"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6Ua-LS-igV">
+                                <rect key="frame" x="139" y="301" width="97" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                                <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="Pli-e0-ggy"/>
+                                </connections>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" red="0.98039215690000003" green="0.63921568630000003" blue="0.92941176469999998" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
+                    <connections>
+                        <outlet property="weekLabel" destination="lh7-l2-bV6" id="vTT-Hy-XjR"/>
+                        <outlet property="weekTextField" destination="6Ua-LS-igV" id="kI7-Rn-R8d"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="136.80000000000001" y="138.98050974512745"/>
+        </scene>
+        <!--Camera View Controller-->
+        <scene sceneID="bI9-sI-tXW">
+            <objects>
+                <viewController id="IiC-ai-q3o" customClass="CameraViewController" customModule="BumpTracker" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="HvJ-38-I3M"/>
+                        <viewControllerLayoutGuide type="bottom" id="1NH-0V-SAN"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Rac-Qc-qBa">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pZE-20-jyv">
+                                <rect key="frame" x="16" y="599" width="343" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="OwY-Gn-b3r"/>
+                                </constraints>
+                                <state key="normal" title="Take"/>
+                                <connections>
+                                    <action selector="takePhotoButtonPressed:" destination="IiC-ai-q3o" eventType="touchUpInside" id="Rgp-U0-YD3"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iea-7r-eLC">
+                                <rect key="frame" x="16" y="28" width="343" height="563"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" alpha="0.40000000000000002" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Sillouhette" translatesAutoresizingMaskIntoConstraints="NO" id="KZs-1o-ayn">
+                                        <rect key="frame" x="0.0" y="0.0" width="343" height="563"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="KZs-1o-ayn" secondAttribute="trailing" id="BTB-Po-bZ5"/>
+                                    <constraint firstAttribute="bottom" secondItem="KZs-1o-ayn" secondAttribute="bottom" id="ObR-Nx-6Wp"/>
+                                    <constraint firstItem="KZs-1o-ayn" firstAttribute="leading" secondItem="iea-7r-eLC" secondAttribute="leading" id="PV2-rj-luO"/>
+                                    <constraint firstItem="KZs-1o-ayn" firstAttribute="top" secondItem="iea-7r-eLC" secondAttribute="top" id="eFd-Yt-mGe"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="pZE-20-jyv" firstAttribute="top" secondItem="iea-7r-eLC" secondAttribute="bottom" constant="8" id="53U-Kx-VCv"/>
+                            <constraint firstItem="pZE-20-jyv" firstAttribute="centerX" secondItem="Rac-Qc-qBa" secondAttribute="centerX" id="7b1-VS-iwi"/>
+                            <constraint firstAttribute="trailing" secondItem="pZE-20-jyv" secondAttribute="trailing" id="7dW-cE-46g"/>
+                            <constraint firstItem="iea-7r-eLC" firstAttribute="trailing" secondItem="Rac-Qc-qBa" secondAttribute="trailingMargin" id="86h-ac-nE3"/>
+                            <constraint firstItem="pZE-20-jyv" firstAttribute="leading" secondItem="Rac-Qc-qBa" secondAttribute="leading" id="IZ2-kE-kzL"/>
+                            <constraint firstItem="1NH-0V-SAN" firstAttribute="top" secondItem="pZE-20-jyv" secondAttribute="bottom" constant="8" id="beK-pd-the"/>
+                            <constraint firstItem="iea-7r-eLC" firstAttribute="top" secondItem="HvJ-38-I3M" secondAttribute="bottom" constant="8" id="e4Y-2U-KvY"/>
+                            <constraint firstItem="iea-7r-eLC" firstAttribute="centerX" secondItem="Rac-Qc-qBa" secondAttribute="centerX" id="mG0-nC-hwI"/>
+                            <constraint firstItem="iea-7r-eLC" firstAttribute="leading" secondItem="Rac-Qc-qBa" secondAttribute="leadingMargin" id="ylC-kb-Wsw"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="pastImageView" destination="KZs-1o-ayn" id="cqt-gF-ZDF"/>
+                        <outlet property="previewView" destination="iea-7r-eLC" id="p33-uK-ePW"/>
+                        <outlet property="takePhotoButton" destination="pZE-20-jyv" id="xzV-Hl-XhC"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pwM-6a-AH0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="965.60000000000002" y="138.98050974512745"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Sillouhette" width="338" height="428"/>
+    </resources>
 </document>
