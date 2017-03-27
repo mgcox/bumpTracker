@@ -30,10 +30,15 @@ im2 = cv2.imread(sys.argv[2])
 contours1 = getRightContours(im)
 contours2 = getRightContours(im2)
 
-# Compare the two contours
-for index, cont in enumerate(contours1):
-    for index2, cc in enumerate(cont):
-        print('cont1: ', contours1[index][index2], ' cont2: ', contours2[index][index2])
+# Get the max Y value for each right contour
+maxY1 = max(list(map(lambda el: el[0][1], contours1[0])))
+maxY2 = max(list(map(lambda el: el[0][1], contours2[0])))
+
+print(str(maxY1) + ' compared to ' + str(maxY2))
+
+# This is the amount image 2 will need to be moved in the Y direction to be matched
+yDiff = maxY1 - maxY2
+print('Shift image two down by ' + str(yDiff) + ' pixels.')
 
 # # print(contours[0])
 # c = cv2.drawContours(im, contours1, -1, (0,255,0), 3)
