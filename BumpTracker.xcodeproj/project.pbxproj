@@ -15,7 +15,9 @@
 		949ACE7C1E54D556005FCC71 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 949ACE7A1E54D556005FCC71 /* LaunchScreen.storyboard */; };
 		949ACE871E54D556005FCC71 /* BumpTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949ACE861E54D556005FCC71 /* BumpTrackerTests.swift */; };
 		949ACE921E54D556005FCC71 /* BumpTrackerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949ACE911E54D556005FCC71 /* BumpTrackerUITests.swift */; };
+		949BE85C1E9744EF005ED324 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 949BE85B1E9744EF005ED324 /* opencv2.framework */; };
 		949EA2361E82E3CC0045C1FA /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949EA2351E82E3CC0045C1FA /* CameraViewController.swift */; };
+		94C891771E9742DC009CD07B /* OpenCVWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 94C891761E9742DC009CD07B /* OpenCVWrapper.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,7 +52,11 @@
 		949ACE8D1E54D556005FCC71 /* BumpTrackerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BumpTrackerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		949ACE911E54D556005FCC71 /* BumpTrackerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BumpTrackerUITests.swift; sourceTree = "<group>"; };
 		949ACE931E54D556005FCC71 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		949BE85B1E9744EF005ED324 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = BumpTracker/opencv2.framework; sourceTree = "<group>"; };
 		949EA2351E82E3CC0045C1FA /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
+		94C891741E9742DC009CD07B /* BumpTracker-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BumpTracker-Bridging-Header.h"; sourceTree = "<group>"; };
+		94C891751E9742DC009CD07B /* OpenCVWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenCVWrapper.h; sourceTree = "<group>"; };
+		94C891761E9742DC009CD07B /* OpenCVWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OpenCVWrapper.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +64,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				949BE85C1E9744EF005ED324 /* opencv2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -85,6 +92,7 @@
 				949ACE851E54D556005FCC71 /* BumpTrackerTests */,
 				949ACE901E54D556005FCC71 /* BumpTrackerUITests */,
 				949ACE6C1E54D555005FCC71 /* Products */,
+				94C891711E974200009CD07B /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -107,8 +115,11 @@
 				949EA2351E82E3CC0045C1FA /* CameraViewController.swift */,
 				949ACE781E54D555005FCC71 /* Assets.xcassets */,
 				949ACE7A1E54D556005FCC71 /* LaunchScreen.storyboard */,
+				94C891751E9742DC009CD07B /* OpenCVWrapper.h */,
+				94C891761E9742DC009CD07B /* OpenCVWrapper.mm */,
 				949ACE7D1E54D556005FCC71 /* Info.plist */,
 				949ACE751E54D555005FCC71 /* BumpTracker.xcdatamodeld */,
+				94C891741E9742DC009CD07B /* BumpTracker-Bridging-Header.h */,
 			);
 			path = BumpTracker;
 			sourceTree = "<group>";
@@ -129,6 +140,14 @@
 				949ACE931E54D556005FCC71 /* Info.plist */,
 			);
 			path = BumpTrackerUITests;
+			sourceTree = "<group>";
+		};
+		94C891711E974200009CD07B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				949BE85B1E9744EF005ED324 /* opencv2.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -200,6 +219,7 @@
 					949ACE6A1E54D555005FCC71 = {
 						CreatedOnToolsVersion = 8.2;
 						DevelopmentTeam = 4QWLAVZU44;
+						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
 					949ACE811E54D556005FCC71 = {
@@ -269,6 +289,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				949ACE711E54D555005FCC71 /* ViewController.swift in Sources */,
+				94C891771E9742DC009CD07B /* OpenCVWrapper.mm in Sources */,
 				949EA2361E82E3CC0045C1FA /* CameraViewController.swift in Sources */,
 				949ACE6F1E54D555005FCC71 /* AppDelegate.swift in Sources */,
 				949ACE771E54D555005FCC71 /* BumpTracker.xcdatamodeld in Sources */,
@@ -423,11 +444,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 4QWLAVZU44;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/BumpTracker",
+				);
 				INFOPLIST_FILE = BumpTracker/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mgarrettcox.BumpTracker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "BumpTracker/BumpTracker-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -436,11 +464,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 4QWLAVZU44;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/BumpTracker",
+				);
 				INFOPLIST_FILE = BumpTracker/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.mgarrettcox.BumpTracker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "BumpTracker/BumpTracker-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

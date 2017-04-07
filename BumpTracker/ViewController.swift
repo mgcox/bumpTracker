@@ -8,6 +8,7 @@
 
 import UIKit
 
+
 class ViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var weekLabel: UILabel!
@@ -20,6 +21,10 @@ class ViewController: UIViewController, UITextFieldDelegate {
         
         
         let defaults = UserDefaults.standard
+        
+        let opencv = OpenCVWrapper()
+        opencv.processPhoto()
+        
         
         
         
