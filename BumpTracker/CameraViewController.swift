@@ -97,6 +97,8 @@ class CameraViewController: UIViewController {
         }
     }
     
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -112,8 +114,18 @@ class CameraViewController: UIViewController {
                     let cgImageRef = CGImage(jpegDataProviderSource: dataProvider!, decode: nil, shouldInterpolate: true, intent: .defaultIntent)
                     
                     let image = UIImage(cgImage: cgImageRef!, scale: 1.0, orientation: UIImageOrientation.right)
-                    self.pastImageView.image = image
                    
+                    let monochromeFilter = CIFilter(name:"CIColorMonochrome")
+                    
+                    // Set some filter parameters.
+                    monochromeFilter?.setValue(image, forKey:kCIInputImageKey)
+                    monochromeFilter?.setValue(CIColor(red: 0.5, green: 0.5, blue: 0.5), forKey:kCIInputColorKey)
+                    monochromeFilter?.setValue(1.0, forKey:kCIInputIntensityKey)
+                    
+                    // Use the playground to peek at the image now
+                    let outputCIImage = monochromeFilter?.outputImage
+                    
+                    self.pastImageView.image = outputCIImage
                 }
             })
         }
