@@ -19,9 +19,12 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
 
     @IBOutlet weak var photoListTableView: UITableView!
     
+    @IBOutlet weak var weekLabel: UILabel!
     
     var photoshoots = [PhotoShoot]()
     var selectedPhotoShoot : PhotoShoot?
+    
+    var previousShoot : UIImage?
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
@@ -32,12 +35,72 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
         
         let defaults = UserDefaults.standard
         
+        if let start = defaults.value(forKey: "startDate") {
+            
+            let calendar = NSCalendar.current
+            
+            // Replace the hour (time) of both dates with 00:00
+            
+            
+            
+            let date1 = calendar.startOfDay(for: start as! Date)
+
+            let date2 = calendar.startOfDay(for: Date())
+            
+            let flags = NSCalendar.Unit.day
+
+            let components = calendar.dateComponents([Calendar.Component.day], from: date1, to: date2)
+            
+            weekLabel.text = String(components.day!/7)
+            // This will return the number of day(s) between dates
+            
+            
+        }else{
+            
+            //New User, get the current week
+            let alertController = UIAlertController(title: "Welcome to Bump Tracker!", message: "Please Enter Your Current Gestational Week", preferredStyle: .alert)
+            
+            let saveAction = UIAlertAction(title: "Save", style: .default, handler: {
+                alert -> Void in
+                
+                let weekTextField = alertController.textFields![0] as UITextField
+                let weeks = Double(weekTextField.text!)
+                let now = Date()
+                let dateXWeeksAgo = now.addingTimeInterval(-weeks!*24*60*60)
+                
+                self.weekLabel.text = String(Int(weeks!))
+                
+                defaults.setValue(dateXWeeksAgo, forKeyPath: "startDate")
+                
+            })
+            
+//            let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: {
+//                (action : UIAlertAction!) -> Void in
+//                
+//            })
+            
+            alertController.addTextField { (textField : UITextField!) -> Void in
+                textField.placeholder = "4"
+                textField.keyboardType = UIKeyboardType.numberPad
+            }
+            
+            alertController.addAction(saveAction)
+           // alertController.addAction(cancelAction)
+            
+            self.present(alertController, animated: true, completion: nil)
+        }
+        
+        
+        
 //        let opencv = OpenCVWrapper()
 //        opencv.processPhoto()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         fetchPhotoshoots()
+        
+        var nav = self.navigationController?.navigationBar
+        nav?.titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white,  NSFontAttributeName: UIFont(name: "Banaue", size: 36)!]
     }
 
     override func didReceiveMemoryWarning() {
@@ -46,13 +109,21 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
     }
     
     func fetchPhotoshoots(){
+
+        let sectionSortDescriptor = NSSortDescriptor(key: "date", ascending: false)
+        let sortDescriptors = [sectionSortDescriptor]
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "PhotoShoot")
-        
+         fetchRequest.sortDescriptors = sortDescriptors
         // Execute Fetch Request
         do {
             let result = try self.context.fetch(fetchRequest)
             
             photoshoots = result as! [PhotoShoot]
+            
+            if let shoot = photoshoots[0].photoData {
+                self.previousShoot = UIImage(data: shoot as Data)
+            }
+            
             
             //Reload Table
             DispatchQueue.main.async(execute: { () -> Void in
@@ -168,6 +239,12 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
         if segue.identifier == "viewPhoto" {
             let destVC = segue.destination as! PhotoshootViewerVC
             destVC.shoot = selectedPhotoShoot
+            
+        }else if segue.identifier == "takePhoto" {
+            let destVC = segue.destination as! CameraViewController
+            if previousShoot != nil {
+                destVC.previousPhoto = previousShoot!
+            }
             
         }
     }

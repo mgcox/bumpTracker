@@ -21,7 +21,7 @@ class CameraViewController: UIViewController {
     var captureSession = AVCaptureSession()
     var stillImageOutput = AVCaptureStillImageOutput()
     var previewLayer : AVCaptureVideoPreviewLayer?
-    
+    var previousPhoto : UIImage?
     var captureDevice : AVCaptureDevice?
     
     override func viewDidLoad() {
@@ -43,6 +43,11 @@ class CameraViewController: UIViewController {
             input = nil
         }
         
+        if previousPhoto != nil {
+            pastImageView.image = previousPhoto
+        }
+        
+        
         if error == nil && captureSession.canAddInput(input) {
             captureSession.addInput(input)
             
@@ -53,7 +58,7 @@ class CameraViewController: UIViewController {
                 
                 previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
                 //previewLayer!.videoGravity = AVLayerVideoGravityResizeAspect
-                previewLayer!.videoGravity = AVLayerVideoGravityResizeAspectFill
+                previewLayer!.videoGravity = AVLayerVideoGravityResize
                 previewLayer!.connection?.videoOrientation = AVCaptureVideoOrientation.portrait
                 
                 previewView.layer.addSublayer(previewLayer!)
@@ -112,7 +117,6 @@ class CameraViewController: UIViewController {
                 if (sampleBuffer != nil) {
                     let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(sampleBuffer)
                     
-                    
                     let dataProvider = CGDataProvider(data: imageData as! CFData)
                     let cgImageRef = CGImage(jpegDataProviderSource: dataProvider!, decode: nil, shouldInterpolate: true, intent: .defaultIntent)
                     
@@ -129,13 +133,14 @@ class CameraViewController: UIViewController {
                     let outputCIImage = monochromeFilter?.outputImage
                     
                     let monochromeVersion = UIImage(ciImage: outputCIImage!, scale: 1.0, orientation: .right)
+ 
                     
                     
+                    //TODO: Give user alert/ let them confirm that is the photo they want to use
                     self.savePhotoShoot(photoTaken: image)
                     
-                    self.pastImageView.image = monochromeVersion
-                    
-                    
+                    //We no longer want to update photo with previous photo
+                    //self.pastImageView.image = image
                     
                 }
             })

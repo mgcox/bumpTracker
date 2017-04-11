@@ -10,6 +10,7 @@
 		94786B5D1E9C653D0081934A /* PhotoshootViewerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94786B5C1E9C653D0081934A /* PhotoshootViewerVC.swift */; };
 		947F63471E9C294600046F9C /* PhotosTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947F63461E9C294600046F9C /* PhotosTableViewCell.swift */; };
 		948B5A5B1E9C84C50009EEE1 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 948B5A5A1E9C84C50009EEE1 /* Photos.framework */; };
+		948B5A5D1E9D590B0009EEE1 /* Banaue-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 948B5A5C1E9D590B0009EEE1 /* Banaue-Regular.otf */; };
 		949ACE6F1E54D555005FCC71 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949ACE6E1E54D555005FCC71 /* AppDelegate.swift */; };
 		949ACE711E54D555005FCC71 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949ACE701E54D555005FCC71 /* ViewController.swift */; };
 		949ACE741E54D555005FCC71 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 949ACE721E54D555005FCC71 /* Main.storyboard */; };
@@ -43,6 +44,7 @@
 		94786B5C1E9C653D0081934A /* PhotoshootViewerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoshootViewerVC.swift; sourceTree = "<group>"; };
 		947F63461E9C294600046F9C /* PhotosTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotosTableViewCell.swift; sourceTree = "<group>"; };
 		948B5A5A1E9C84C50009EEE1 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
+		948B5A5C1E9D590B0009EEE1 /* Banaue-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Banaue-Regular.otf"; sourceTree = "<group>"; };
 		949ACE6B1E54D555005FCC71 /* BumpTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BumpTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		949ACE6E1E54D555005FCC71 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		949ACE701E54D555005FCC71 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -152,6 +154,7 @@
 		94C891711E974200009CD07B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				948B5A5C1E9D590B0009EEE1 /* Banaue-Regular.otf */,
 				948B5A5A1E9C84C50009EEE1 /* Photos.framework */,
 				949BE85B1E9744EF005ED324 /* opencv2.framework */,
 			);
@@ -269,6 +272,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				948B5A5D1E9D590B0009EEE1 /* Banaue-Regular.otf in Resources */,
 				949ACE7C1E54D556005FCC71 /* LaunchScreen.storyboard in Resources */,
 				949ACE791E54D555005FCC71 /* Assets.xcassets in Resources */,
 				949ACE741E54D555005FCC71 /* Main.storyboard in Resources */,
