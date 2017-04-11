@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		94786B5D1E9C653D0081934A /* PhotoshootViewerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94786B5C1E9C653D0081934A /* PhotoshootViewerVC.swift */; };
+		947F63471E9C294600046F9C /* PhotosTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947F63461E9C294600046F9C /* PhotosTableViewCell.swift */; };
 		949ACE6F1E54D555005FCC71 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949ACE6E1E54D555005FCC71 /* AppDelegate.swift */; };
 		949ACE711E54D555005FCC71 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949ACE701E54D555005FCC71 /* ViewController.swift */; };
 		949ACE741E54D555005FCC71 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 949ACE721E54D555005FCC71 /* Main.storyboard */; };
@@ -15,7 +17,6 @@
 		949ACE7C1E54D556005FCC71 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 949ACE7A1E54D556005FCC71 /* LaunchScreen.storyboard */; };
 		949ACE871E54D556005FCC71 /* BumpTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949ACE861E54D556005FCC71 /* BumpTrackerTests.swift */; };
 		949ACE921E54D556005FCC71 /* BumpTrackerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949ACE911E54D556005FCC71 /* BumpTrackerUITests.swift */; };
-		949BE85C1E9744EF005ED324 /* opencv2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 949BE85B1E9744EF005ED324 /* opencv2.framework */; };
 		949EA2361E82E3CC0045C1FA /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949EA2351E82E3CC0045C1FA /* CameraViewController.swift */; };
 		94C891771E9742DC009CD07B /* OpenCVWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 94C891761E9742DC009CD07B /* OpenCVWrapper.mm */; };
 /* End PBXBuildFile section */
@@ -38,6 +39,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		94786B5C1E9C653D0081934A /* PhotoshootViewerVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoshootViewerVC.swift; sourceTree = "<group>"; };
+		947F63461E9C294600046F9C /* PhotosTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotosTableViewCell.swift; sourceTree = "<group>"; };
 		949ACE6B1E54D555005FCC71 /* BumpTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BumpTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		949ACE6E1E54D555005FCC71 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		949ACE701E54D555005FCC71 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -64,7 +67,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				949BE85C1E9744EF005ED324 /* opencv2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,10 +114,12 @@
 				949ACE6E1E54D555005FCC71 /* AppDelegate.swift */,
 				949ACE701E54D555005FCC71 /* ViewController.swift */,
 				949ACE721E54D555005FCC71 /* Main.storyboard */,
+				947F63461E9C294600046F9C /* PhotosTableViewCell.swift */,
 				949EA2351E82E3CC0045C1FA /* CameraViewController.swift */,
 				949ACE781E54D555005FCC71 /* Assets.xcassets */,
 				949ACE7A1E54D556005FCC71 /* LaunchScreen.storyboard */,
 				94C891751E9742DC009CD07B /* OpenCVWrapper.h */,
+				94786B5C1E9C653D0081934A /* PhotoshootViewerVC.swift */,
 				94C891761E9742DC009CD07B /* OpenCVWrapper.mm */,
 				949ACE7D1E54D556005FCC71 /* Info.plist */,
 				949ACE751E54D555005FCC71 /* BumpTracker.xcdatamodeld */,
@@ -288,10 +292,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				947F63471E9C294600046F9C /* PhotosTableViewCell.swift in Sources */,
 				949ACE711E54D555005FCC71 /* ViewController.swift in Sources */,
 				94C891771E9742DC009CD07B /* OpenCVWrapper.mm in Sources */,
 				949EA2361E82E3CC0045C1FA /* CameraViewController.swift in Sources */,
 				949ACE6F1E54D555005FCC71 /* AppDelegate.swift in Sources */,
+				94786B5D1E9C653D0081934A /* PhotoshootViewerVC.swift in Sources */,
 				949ACE771E54D555005FCC71 /* BumpTracker.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

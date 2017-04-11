@@ -8,7 +8,7 @@
 
 import UIKit
 import AVFoundation
-
+import CoreData
 
 class CameraViewController: UIViewController {
 
@@ -131,10 +131,52 @@ class CameraViewController: UIViewController {
                     let monochromeVersion = UIImage(ciImage: outputCIImage!, scale: 1.0, orientation: .right)
                     
                     
+                    self.savePhotoShoot(photoTaken: image)
+                    
                     self.pastImageView.image = monochromeVersion
+                    
+                    
                     
                 }
             })
+        }
+        
+        
+    }
+    
+    
+    func savePhotoShoot(photoTaken : UIImage){
+        guard let appDelegate =
+            UIApplication.shared.delegate as? AppDelegate else {
+                return
+        }
+        
+        // 1
+        let managedContext =
+            appDelegate.persistentContainer.viewContext
+        
+        // 2
+        let entity =
+            NSEntityDescription.entity(forEntityName: "PhotoShoot",
+                                       in: managedContext)!
+        
+        let shoot = NSManagedObject(entity: entity,
+                                     insertInto: managedContext)
+        
+        // 3 - Save Values to CoreData
+        shoot.setValue(Date(), forKeyPath: "Date")
+        
+        shoot.setValue(UInt16(1), forKeyPath: "week")
+        
+        let imageData = NSData(data: UIImageJPEGRepresentation(photoTaken, 1.0)!)
+        
+        shoot.setValue(imageData, forKey: "photoData")
+        
+        // 4
+        do {
+            try managedContext.save()
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
         }
         
         

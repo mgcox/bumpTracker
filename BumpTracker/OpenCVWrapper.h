@@ -1,19 +1,19 @@
+////
+////  OpenCVWrapper.h
+////  BumpTracker
+////
+////  Created by Garrett Cox on 4/6/17.
+////  Copyright © 2017 GNiOS Applications. All rights reserved.
+////
 //
-//  OpenCVWrapper.h
-//  BumpTracker
+//#import <Foundation/Foundation.h>
 //
-//  Created by Garrett Cox on 4/6/17.
-//  Copyright © 2017 GNiOS Applications. All rights reserved.
+//@interface OpenCVWrapper : NSObject
 //
-
-#import <Foundation/Foundation.h>
-
-@interface OpenCVWrapper : NSObject
-
-
-- (void)isThisWorking;
-
-- (void)processPhoto;
-
-
-@end
+//
+//- (void)isThisWorking;
+//
+//- (void)processPhoto;
+//
+//
+//@end
