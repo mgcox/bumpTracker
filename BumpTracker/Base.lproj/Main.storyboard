@@ -39,7 +39,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="7ul-Rr-cc4">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="613"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="photoCell" id="9vf-Kl-nut" customClass="PhotosTableViewCell" customModule="BumpTracker" customModuleProvider="target">
@@ -68,12 +68,27 @@
                                     <outlet property="delegate" destination="FWh-IF-OFh" id="KgA-mS-Uoo"/>
                                 </connections>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sQv-hS-Z6R">
+                                <rect key="frame" x="0.0" y="613" width="375" height="54"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="54" id="a84-mT-S28"/>
+                                </constraints>
+                                <state key="normal" title="Create Gif"/>
+                                <connections>
+                                    <action selector="createGifButtonPressed:" destination="FWh-IF-OFh" eventType="touchUpInside" id="049-A3-1Wq"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="sQv-hS-Z6R" secondAttribute="trailing" id="6vJ-m1-No8"/>
+                            <constraint firstItem="sQv-hS-Z6R" firstAttribute="centerX" secondItem="uYT-Th-5bb" secondAttribute="centerX" id="Erb-9Y-Jl1"/>
+                            <constraint firstItem="sQv-hS-Z6R" firstAttribute="leading" secondItem="uYT-Th-5bb" secondAttribute="leading" id="OxA-MD-BnA"/>
+                            <constraint firstItem="Vtu-ll-V76" firstAttribute="top" secondItem="sQv-hS-Z6R" secondAttribute="bottom" id="SzE-d1-Z00"/>
                             <constraint firstAttribute="trailing" secondItem="7ul-Rr-cc4" secondAttribute="trailing" id="bFr-vh-IfC"/>
+                            <constraint firstItem="sQv-hS-Z6R" firstAttribute="top" secondItem="7ul-Rr-cc4" secondAttribute="bottom" id="bHq-en-HpT"/>
                             <constraint firstItem="7ul-Rr-cc4" firstAttribute="top" secondItem="uYT-Th-5bb" secondAttribute="top" id="pcv-kt-go3"/>
-                            <constraint firstItem="Vtu-ll-V76" firstAttribute="top" secondItem="7ul-Rr-cc4" secondAttribute="bottom" id="vzF-Ih-j7c"/>
+                            <constraint firstItem="Vtu-ll-V76" firstAttribute="top" secondItem="7ul-Rr-cc4" secondAttribute="bottom" constant="54" id="vzF-Ih-j7c"/>
                             <constraint firstItem="7ul-Rr-cc4" firstAttribute="leading" secondItem="uYT-Th-5bb" secondAttribute="leading" id="xuy-IU-OpA"/>
                             <constraint firstItem="7ul-Rr-cc4" firstAttribute="centerX" secondItem="uYT-Th-5bb" secondAttribute="centerX" id="zzl-ER-bue"/>
                         </constraints>
@@ -148,6 +163,7 @@
                     </view>
                     <connections>
                         <outlet property="photoView" destination="m7f-zi-SzQ" id="37N-Ck-kUa"/>
+                        <outlet property="weekLabel" destination="jmb-HR-clg" id="PXM-Az-Qar"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zfR-I0-8gG" userLabel="First Responder" sceneMemberID="firstResponder"/>

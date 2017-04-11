@@ -2,6 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Allows user to save photos to photo roll</string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Allows users to store created Gifs</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>NSCameraUsageDescription</key>

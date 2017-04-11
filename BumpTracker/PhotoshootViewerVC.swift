@@ -13,6 +13,7 @@ class PhotoshootViewerVC: UIViewController {
 
     @IBOutlet weak var photoView: UIImageView!
     
+    @IBOutlet weak var weekLabel: UILabel!
     var shoot : PhotoShoot?
     
     override func viewDidLoad() {
@@ -21,6 +22,8 @@ class PhotoshootViewerVC: UIViewController {
         // Do any additional setup after loading the view.
         if shoot != nil {
             photoView.image = UIImage(data: shoot!.photoData! as Data)
+            
+            weekLabel.text = String(shoot!.week)
         }
         
     }
