@@ -119,10 +119,13 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
             let result = try self.context.fetch(fetchRequest)
             
             photoshoots = result as! [PhotoShoot]
-            
-            if let shoot = photoshoots[0].photoData {
-                self.previousShoot = UIImage(data: shoot as Data)
+            if photoshoots.count > 0 {
+                if let shoot = photoshoots[0].photoData {
+                    self.previousShoot = UIImage(data: shoot as Data)
+                    
+                }
             }
+
             
             
             //Reload Table
@@ -253,14 +256,15 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
         
         var images = [UIImage]()
         
-        for photo in photoshoots{
+        for photo in photoshoots.reversed(){
             let image = UIImage(data: photo.photoData! as Data)
-           images.append(image!)
+
+            let fixed = image?.fixOrientation()    
+           images.append(fixed!)
         }
         
         createGIF(with: images, frameDelay: 0.2) { (location, error) in
             if error == nil {
-                
                 PHPhotoLibrary.shared().performChanges({ 
                     PHAssetCreationRequest.creationRequestForAssetFromImage(atFileURL: location! as URL)
                 }, completionHandler: { (success, error) in
@@ -270,9 +274,6 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
                         }
                     }
                 })
-                
-            
-                
             }
         }
         
@@ -297,6 +298,8 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
         let fileProperties = [kCGImagePropertyGIFDictionary as String: [kCGImagePropertyGIFLoopCount as String: loopCount]]
         let frameProperties = [kCGImagePropertyGIFDictionary as String: [kCGImagePropertyGIFDelayTime as String: frameDelay]]
         
+
+        
         let documentsDirectory = NSTemporaryDirectory()
         let url = NSURL(fileURLWithPath: documentsDirectory).appendingPathComponent("animated.gif")
         
@@ -305,6 +308,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
         
         for i in 0..<images.count {
             CGImageDestinationAddImage(destination!, images[i].cgImage!, frameProperties as CFDictionary)
+        
         }
         
         if CGImageDestinationFinalize(destination!) {
@@ -314,8 +318,24 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
         }
     }
     
-    
-    
+
     
 }
+
+extension UIImage {
+    func fixOrientation() -> UIImage {
+        if self.imageOrientation == UIImageOrientation.up {
+            return self
+        }
+        UIGraphicsBeginImageContextWithOptions(self.size, false, self.scale)
+        self.draw(in: CGRect(x: 0, y: 0, width: self.size.width, height: self.size.height))
+        if let normalizedImage: UIImage = UIGraphicsGetImageFromCurrentImageContext() {
+            UIGraphicsEndImageContext()
+            return normalizedImage
+        } else {
+            return self
+        }
+    }
+}
+
 
