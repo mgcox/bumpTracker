@@ -1,0 +1,6 @@
+framework module Pods_BumpTrackerTests {
+  umbrella header "Pods-BumpTrackerTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

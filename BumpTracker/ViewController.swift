@@ -259,7 +259,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
         for photo in photoshoots.reversed(){
             let image = UIImage(data: photo.photoData! as Data)
 
-            let fixed = image?.fixOrientation()    
+            let fixed = image?.fixOrientation()
            images.append(fixed!)
         }
         
@@ -317,9 +317,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
             callback(nil, NSError(domain: "createGIF", code: 0, userInfo: nil))
         }
     }
-    
-
-    
+  
 }
 
 extension UIImage {
