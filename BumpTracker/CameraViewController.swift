@@ -9,9 +9,13 @@
 import UIKit
 import AVFoundation
 import CoreData
+import CorePlot
+
 
 class CameraViewController: UIViewController {
 
+    @IBOutlet weak var verticalGraphView: CPTGraphHostingView!
+    @IBOutlet weak var horizontalGraphView: CPTGraphHostingView!
     @IBOutlet weak var previewView: UIView!
     
     @IBOutlet weak var takePhotoButton: UIButton!
