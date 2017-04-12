@@ -24,6 +24,8 @@ class CameraViewController: UIViewController {
     var previousPhoto : UIImage?
     var captureDevice : AVCaptureDevice?
     
+    let DEBUG = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -156,6 +158,8 @@ class CameraViewController: UIViewController {
                 return
         }
         
+        self.sumProfile(photo: photoTaken)
+        
         // 1
         let managedContext =
             appDelegate.persistentContainer.viewContext
@@ -185,6 +189,65 @@ class CameraViewController: UIViewController {
         }
         
         
+    }
+    
+    func sumProfile(photo: UIImage){
+        let start = DispatchTime.now()
+//        var image = photo.cgImage
+        var grayScaledImage = [Int]()
+        var profile = [Int]()
+        
+        let size = photo.size
+        let width = Int(size.width)
+        let height = Int(size.height)
+        print("Width: " + String(width))
+        print("Height: " + String(height))
+        let dataSize = size.width * size.height * 4
+        var pixelData = [UInt8](repeating: 0, count: Int(dataSize))
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        let context = CGContext(data: &pixelData,
+                                width: width,
+                                height: height,
+                                bitsPerComponent: 8,
+                                bytesPerRow: 4 * Int(size.width),
+                                space: colorSpace,
+                                bitmapInfo: CGImageAlphaInfo.noneSkipLast.rawValue)
+        guard let cgImage = photo.cgImage else { return }
+        context?.draw(cgImage, in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
+        
+        // B&W
+        for i in 0...(width-1) {
+//            print("i is " + String(i))
+            for j in 0...(height-1) {
+                //Here is your raw pixels
+                let offset = 4 * ((width * Int(j)) + Int(i))
+//                let alpha = pixelData[offset]
+//                print("offset is" + String(offset))
+                let red = pixelData[offset+1]
+                let green = pixelData[offset+2]
+                let blue = pixelData[offset+3]
+                let avg = (Int(red) + Int(green) + Int(blue)) / 3
+                grayScaledImage.append(avg)
+            }
+        }
+        
+        // SUM
+        for i in 0...(width-1) {
+            var tempSum = 0
+            for j in 0...(height-1) {
+                let offset = ((width * Int(j)) + Int(i)%(width-1))
+                // Sum along the axis.
+                tempSum += grayScaledImage[offset]
+            }
+            // Append to sum array.
+            profile.append(tempSum)
+        }
+        
+        if self.DEBUG{
+            let end = DispatchTime.now()
+            let diff = Double(end.uptimeNanoseconds - start.uptimeNanoseconds) / 1_000_000_000 // Gives seconds
+            print("Sum finished in \(diff) seconds.")
+        }
     }
     
     
