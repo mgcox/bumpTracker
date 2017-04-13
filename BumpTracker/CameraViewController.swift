@@ -10,9 +10,10 @@ import UIKit
 import AVFoundation
 import CoreData
 import CorePlot
+import CoreGraphics
 
 
-class CameraViewController: UIViewController {
+class CameraViewController: UIViewController, CPTPlotDataSource {
 
     @IBOutlet weak var verticalGraphView: CPTGraphHostingView!
     @IBOutlet weak var horizontalGraphView: CPTGraphHostingView!
@@ -28,10 +29,58 @@ class CameraViewController: UIViewController {
     var previousPhoto : UIImage?
     var captureDevice : AVCaptureDevice?
     
+    var data = [Int]()
+    
     let DEBUG = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // create graph
+        var graph = CPTXYGraph(frame: CGRect.zero)
+        let plotSpace = graph.defaultPlotSpace as! CPTXYPlotSpace
+        
+        graph.title = "Profile"
+        graph.paddingLeft = 0
+        graph.paddingTop = 0
+        graph.paddingRight = 0
+        graph.paddingBottom = 0
+        // hide the axes
+        var axes = graph.axisSet as! CPTXYAxisSet
+        var lineStyle = CPTMutableLineStyle()
+        lineStyle.lineWidth = 0
+        axes.xAxis?.axisLineStyle = lineStyle
+        axes.yAxis?.axisLineStyle = lineStyle
+        
+        for i in 0...100{
+            data.append(i)
+        }
+        let plot = CPTScatterPlot()
+        plot.identifier = "Scatter Plot" as NSCoding & NSCopying & NSObjectProtocol
+//        plot.delegate = self
+        plot.dataSource = self
+        graph.add(plot)
+        
+        plotSpace.scale(toFit:[plot])
+        plotSpace.xRange = CPTPlotRange(location: 0, length: 10)
+        plotSpace.yRange = CPTPlotRange(location: 0, length: 20)
+        
+        // add a pie plot
+//        var pie = CPTPieChart()
+//        pie.dataSource = self
+//        pie.pieRadius = (self.view.frame.size.width * 0.9)/2
+//        graph.add(pie)
+        
+        self.horizontalGraphView.hostedGraph = graph
+    }
+    
+    
+    func numberOfRecords(for: CPTPlot!) -> UInt {
+        return 4
+    }
+    
+    func numberForPlot(plot: CPTPlot!, field fieldEnum: UInt, recordIndex idx: UInt) -> NSNumber! {
+        return idx+UInt(1) as NSNumber
     }
     
     override func viewWillAppear(_ animated: Bool) {
