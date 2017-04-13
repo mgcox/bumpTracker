@@ -13,7 +13,7 @@ import CorePlot
 import CoreGraphics
 
 
-class CameraViewController: UIViewController, CPTPlotDataSource {
+class CameraViewController: UIViewController {
 
     @IBOutlet weak var verticalGraphView: CPTGraphHostingView!
     @IBOutlet weak var horizontalGraphView: CPTGraphHostingView!
@@ -40,11 +40,16 @@ class CameraViewController: UIViewController, CPTPlotDataSource {
         var graph = CPTXYGraph(frame: CGRect.zero)
         let plotSpace = graph.defaultPlotSpace as! CPTXYPlotSpace
         
+        
+        plotSpace.delegate = self
+        //plotSpace.data
+        
         graph.title = "Profile"
         graph.paddingLeft = 0
         graph.paddingTop = 0
         graph.paddingRight = 0
         graph.paddingBottom = 0
+        //graph.plotAreaFrame!.masksToBorder = false
         // hide the axes
         var axes = graph.axisSet as! CPTXYAxisSet
         var lineStyle = CPTMutableLineStyle()
@@ -61,9 +66,12 @@ class CameraViewController: UIViewController, CPTPlotDataSource {
         plot.dataSource = self
         graph.add(plot)
         
+        
         plotSpace.scale(toFit:[plot])
-        plotSpace.xRange = CPTPlotRange(location: 0, length: 10)
-        plotSpace.yRange = CPTPlotRange(location: 0, length: 20)
+        
+        //This should be the legnth of the data
+        plotSpace.xRange = CPTPlotRange(location: 0, length: 3)
+        plotSpace.yRange = CPTPlotRange(location: 0, length: 100)
         
         // add a pie plot
 //        var pie = CPTPieChart()
@@ -316,5 +324,26 @@ class CameraViewController: UIViewController, CPTPlotDataSource {
     */
 
 }
-
+extension CameraViewController: CPTPlotDataSource, CPTPlotSpaceDelegate {
+    //-(NSUInteger)numberOfRecordsForPlot:(nonnull CPTPlot *)plot;
+    func numberOfRecordsForPlot(plot: CPTPlot) -> UInt {
+        return UInt(data.count)
+    }
+    
+    func number(for plot: CPTPlot, field fieldEnum: UInt, record idx: UInt) -> Any? {
+        return idx
+    }
+    
+//    func numberForPlot(plot: CPTPlot, field fieldEnum: UInt, recordIndex idx: UInt) -> AnyObject? {
+//        
+//        switch fieldEnum {
+//        case 0:
+//            return idx
+//        case 1:
+//            return data[Int(idx)]
+//        default:
+//            return 0
+//        }
+//    }
+}
 
