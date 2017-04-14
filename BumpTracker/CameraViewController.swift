@@ -33,6 +33,7 @@ class CameraViewController: UIViewController {
     var max = 100.0
     var min = 0.0
     var graph = CPTXYGraph(frame: CGRect.zero)
+    let plot = CPTScatterPlot()
     var timer: Timer?
     var y = 0.0
     
@@ -61,12 +62,10 @@ class CameraViewController: UIViewController {
         axes.xAxis?.axisLineStyle = lineStyle
         axes.yAxis?.axisLineStyle = lineStyle
         
-        for i in 0...100{
-            data.append(Double(i))
-        }
-        print(data)
-        
-        let plot = CPTScatterPlot()
+//        for i in 0...100{
+//            data.append(Double(i))
+//        }
+//        print(data)
         plot.identifier = "Scatter Plot" as NSCoding & NSCopying & NSObjectProtocol
 //        plot.delegate = self
         plot.dataSource = self
@@ -75,8 +74,6 @@ class CameraViewController: UIViewController {
         
         plotSpace.scale(toFit:[plot])
         
-        //This should be the legnth of the data
-        plotSpace.scale(toFit: [plot])
 //        plotSpace.xRange = CPTPlotRange(location: 0, length: NSNumber(data.count))
 //        plotSpace.yRange = CPTPlotRange(location: 0, length: NSNumber(max))
         
@@ -159,7 +156,7 @@ class CameraViewController: UIViewController {
                 captureSession.startRunning()
                 
                 
-                timer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(updateGraph), userInfo: nil, repeats: true)
+                timer = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(updateGraph), userInfo: nil, repeats: true)
             }
         }
         
@@ -243,8 +240,6 @@ class CameraViewController: UIViewController {
                 return
         }
         
-        self.sumProfile(photo: photoTaken)
-        
         // 1
         let managedContext =
             appDelegate.persistentContainer.viewContext
@@ -277,6 +272,7 @@ class CameraViewController: UIViewController {
     }
     
     func sumProfile(photo: UIImage){
+        print("Entered sumProfile")
         let start = DispatchTime.now()
 //        var image = photo.cgImage
         var grayScaledImage = [Int]()
@@ -325,7 +321,9 @@ class CameraViewController: UIViewController {
                 tempSum += grayScaledImage[offset]
             }
             // Append to sum array.
-            data.append(Double(tempSum))
+            if(i%500 == 0){
+                data.append(Double(tempSum))
+            }
         }
 //        data = profile
 //        print("Reloading data!", data)
@@ -344,31 +342,37 @@ class CameraViewController: UIViewController {
         let serialQueue = DispatchQueue(label: "graphQueue")
         serialQueue.sync {
             //Place computation in here
-            
+            sumProfile(photo: previousPhoto!)
+            graph.reloadData()
+
             
             
             DispatchQueue.main.async {
+                print("Updating")
                 self.horizontalGraphView.hostedGraph = self.graph
+                // If you want a view that tracks the latest 20 values use the following.
+                //        let plotSpace = graph.defaultPlotSpace as! CPTXYPlotSpace
+                ////        max = 290000
+                ////        min = 280000
+                //        plotSpace.xRange = CPTPlotRange(location: 0, length: 200)
+                //        plotSpace.yRange = CPTPlotRange(location: 280000, length: 290000)
             }
             
         }
         
         //Update UI after
-        
-        print("Update!", y)
         //data.append(y)
         y += 2
         
         graph.title="Test \(y)"
-        graph.reloadData()
-        self.horizontalGraphView.hostedGraph = graph
-        // If you want a view that tracks the latest 20 values use the following.
-//        let plotSpace = graph.defaultPlotSpace as! CPTXYPlotSpace
-////        max = 290000
-////        min = 280000
-//        plotSpace.xRange = CPTPlotRange(location: 0, length: 200)
-//        plotSpace.yRange = CPTPlotRange(location: 280000, length: 290000)
-        print("Done")
+        let plotSpace = graph.defaultPlotSpace as! CPTXYPlotSpace
+//        plotSpace.xRange = CPTPlotRange(location: 0, length: 500000)
+        //        plotSpace.yRange = CPTPlotRange(location: 0, length: 500000)
+        plotSpace.scale(toFit:[plot])
+        print("Data", data)
+        print("Summing", plotSpace.xRange, plotSpace.yRange)
+//        graph.reloadData()
+//        self.horizontalGraphView.hostedGraph = graph
     }
     
     func testUpdate(){
@@ -401,7 +405,9 @@ extension CameraViewController: CPTPlotDataSource, CPTPlotSpaceDelegate {
 //    }
     
     func number(for plot: CPTPlot, field fieldEnum: UInt, record idx: UInt) -> Any? {
-        return idx
+//        return data[Int(idx)]
+        print(data[Int(idx)])
+        return UInt(data[Int(idx)])
     }
     
 //    func numberForPlot(plot: CPTPlot, field fieldEnum: UInt, recordIndex idx: UInt) -> AnyObject? {
