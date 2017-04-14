@@ -33,7 +33,7 @@ class CameraViewController: UIViewController {
     var max = 100.0
     var min = 0.0
     var graph = CPTXYGraph(frame: CGRect.zero)
-    var timer: Timer? = nil
+    var timer: Timer?
     var y = 0.0
     
     let DEBUG = true
@@ -88,7 +88,9 @@ class CameraViewController: UIViewController {
         
         self.horizontalGraphView.hostedGraph = graph
         //        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: "updateGraph", userInfo: nil, repeats: true)
-        timer = Timer.scheduledTimer(timeInterval: 1.0,invocation: updateGraph, repeats: true)
+        //timer = Timer.scheduledTimer(timeInterval: 1.0,invocation: updateGraph, repeats: true)
+        
+
 
     }
     
@@ -155,6 +157,9 @@ class CameraViewController: UIViewController {
                 self.pastImageView.layer.zPosition = 1
                 self.previewView.bringSubview(toFront: pastImageView)
                 captureSession.startRunning()
+                
+                
+                timer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(updateGraph), userInfo: nil, repeats: true)
             }
         }
         
@@ -328,28 +333,33 @@ class CameraViewController: UIViewController {
         // To rescale the plot to include everything in the data array use the following.
         //plotSpace.scaleToFitPlots([graph.plotAtIndex(0)!])
         
-        if self.DEBUG{
-            let end = DispatchTime.now()
-            let diff = Double(end.uptimeNanoseconds - start.uptimeNanoseconds) / 1_000_000_000 // Gives seconds
-            print("Sum finished in \(diff) seconds.")
-        }
+//        if self.DEBUG{
+//            let end = DispatchTime.now()
+//            let diff = Double(end.uptimeNanoseconds - start.uptimeNanoseconds) / 1_000_000_000 // Gives seconds
+//            print("Sum finished in \(diff) seconds.")
+//        }
     }
     
     func updateGraph(){
         print("Update!", y)
-        data.append(y)
+        //data.append(y)
         y += 2
+        
+        graph.title="Test \(y)"
         graph.reloadData()
+        self.horizontalGraphView.hostedGraph = graph
         // If you want a view that tracks the latest 20 values use the following.
-        let plotSpace = graph.defaultPlotSpace as! CPTXYPlotSpace
-//        max = 290000
-//        min = 280000
-        plotSpace.xRange = CPTPlotRange(location: 0, length: 200)
-        plotSpace.yRange = CPTPlotRange(location: 280000, length: 290000)
+//        let plotSpace = graph.defaultPlotSpace as! CPTXYPlotSpace
+////        max = 290000
+////        min = 280000
+//        plotSpace.xRange = CPTPlotRange(location: 0, length: 200)
+//        plotSpace.yRange = CPTPlotRange(location: 280000, length: 290000)
         print("Done")
     }
     
-    
+    func testUpdate(){
+        print("fire")
+    }
 
     /*
     // MARK: - Navigation
