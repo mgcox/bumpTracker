@@ -344,13 +344,14 @@ class CameraViewController: UIViewController {
         let serialQueue = DispatchQueue(label: "graphQueue")
         serialQueue.sync {
             //Place computation in here
-            
-            
-            
-            DispatchQueue.main.async {
-                self.horizontalGraphView.hostedGraph = self.graph
-            }
-            
+            getSnapShot(completion: { (snapshot) in
+                
+                //Process the snapshot and add it to the graph in here
+                
+                DispatchQueue.main.async {
+                    self.horizontalGraphView.hostedGraph = self.graph
+                }
+            })
         }
         
         //Update UI after
@@ -371,8 +372,22 @@ class CameraViewController: UIViewController {
         print("Done")
     }
     
-    func testUpdate(){
-        print("fire")
+    func getSnapShot(completion: @escaping (_ result : UIImage) -> Void) {
+        if let videoConnection = stillImageOutput.connection(withMediaType: AVMediaTypeVideo) {
+            videoConnection.videoOrientation = AVCaptureVideoOrientation.portrait
+            stillImageOutput.captureStillImageAsynchronously(from: videoConnection, completionHandler: {(sampleBuffer, error) in
+                if (sampleBuffer != nil) {
+                    let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(sampleBuffer)
+                    
+                    let dataProvider = CGDataProvider(data: imageData as! CFData)
+                    let cgImageRef = CGImage(jpegDataProviderSource: dataProvider!, decode: nil, shouldInterpolate: true, intent: .defaultIntent)
+                    
+                    let image = UIImage(cgImage: cgImageRef!, scale: 1.0, orientation: UIImageOrientation.right)
+
+                    completion(image)
+                }
+            })
+        }
     }
 
     /*
