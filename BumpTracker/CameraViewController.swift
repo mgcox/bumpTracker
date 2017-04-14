@@ -341,6 +341,13 @@ class CameraViewController: UIViewController {
     }
     
     func updateGraph(){
+        let serialQueue = DispatchQueue(label: "graphQueue")
+        serialQueue.sync {
+            //Place computation in here
+        }
+        
+        //Update UI after
+        
         print("Update!", y)
         //data.append(y)
         y += 2
