@@ -344,6 +344,13 @@ class CameraViewController: UIViewController {
         let serialQueue = DispatchQueue(label: "graphQueue")
         serialQueue.sync {
             //Place computation in here
+            
+            
+            
+            DispatchQueue.main.async {
+                self.horizontalGraphView.hostedGraph = self.graph
+            }
+            
         }
         
         //Update UI after
