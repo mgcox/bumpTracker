@@ -29,7 +29,12 @@ class CameraViewController: UIViewController {
     var previousPhoto : UIImage?
     var captureDevice : AVCaptureDevice?
     
-    var data = [Int]()
+    var data = [Double]()
+    var max = 100.0
+    var min = 0.0
+    var graph = CPTXYGraph(frame: CGRect.zero)
+    var timer: Timer? = nil
+    var y = 0.0
     
     let DEBUG = true
     
@@ -37,7 +42,6 @@ class CameraViewController: UIViewController {
         super.viewDidLoad()
         
         // create graph
-        var graph = CPTXYGraph(frame: CGRect.zero)
         let plotSpace = graph.defaultPlotSpace as! CPTXYPlotSpace
         
         
@@ -58,8 +62,10 @@ class CameraViewController: UIViewController {
         axes.yAxis?.axisLineStyle = lineStyle
         
         for i in 0...100{
-            data.append(i)
+            data.append(Double(i))
         }
+        print(data)
+        
         let plot = CPTScatterPlot()
         plot.identifier = "Scatter Plot" as NSCoding & NSCopying & NSObjectProtocol
 //        plot.delegate = self
@@ -70,8 +76,9 @@ class CameraViewController: UIViewController {
         plotSpace.scale(toFit:[plot])
         
         //This should be the legnth of the data
-        plotSpace.xRange = CPTPlotRange(location: 0, length: 3)
-        plotSpace.yRange = CPTPlotRange(location: 0, length: 100)
+        plotSpace.scale(toFit: [plot])
+//        plotSpace.xRange = CPTPlotRange(location: 0, length: NSNumber(data.count))
+//        plotSpace.yRange = CPTPlotRange(location: 0, length: NSNumber(max))
         
         // add a pie plot
 //        var pie = CPTPieChart()
@@ -80,15 +87,27 @@ class CameraViewController: UIViewController {
 //        graph.add(pie)
         
         self.horizontalGraphView.hostedGraph = graph
+        //        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: "updateGraph", userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 1.0,invocation: updateGraph, repeats: true)
+
     }
     
     
-    func numberOfRecords(for: CPTPlot!) -> UInt {
-        return 4
+    func numberOfRecords(for: CPTPlot!) -> AnyObject? {
+        print("COUNT: ", data.count as AnyObject)
+        return data.count as AnyObject
     }
     
     func numberForPlot(plot: CPTPlot!, field fieldEnum: UInt, recordIndex idx: UInt) -> NSNumber! {
-        return idx+UInt(1) as NSNumber
+        
+        switch fieldEnum {
+        case 0:
+            return idx as NSNumber
+        case 1:
+            return data[Int(idx)] as NSNumber
+        default:
+            return 0
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -256,7 +275,7 @@ class CameraViewController: UIViewController {
         let start = DispatchTime.now()
 //        var image = photo.cgImage
         var grayScaledImage = [Int]()
-        var profile = [Int]()
+        data = [Double]()
         
         let size = photo.size
         let width = Int(size.width)
@@ -301,14 +320,33 @@ class CameraViewController: UIViewController {
                 tempSum += grayScaledImage[offset]
             }
             // Append to sum array.
-            profile.append(tempSum)
+            data.append(Double(tempSum))
         }
+//        data = profile
+//        print("Reloading data!", data)
+        
+        // To rescale the plot to include everything in the data array use the following.
+        //plotSpace.scaleToFitPlots([graph.plotAtIndex(0)!])
         
         if self.DEBUG{
             let end = DispatchTime.now()
             let diff = Double(end.uptimeNanoseconds - start.uptimeNanoseconds) / 1_000_000_000 // Gives seconds
             print("Sum finished in \(diff) seconds.")
         }
+    }
+    
+    func updateGraph(){
+        print("Update!", y)
+        data.append(y)
+        y += 2
+        graph.reloadData()
+        // If you want a view that tracks the latest 20 values use the following.
+        let plotSpace = graph.defaultPlotSpace as! CPTXYPlotSpace
+//        max = 290000
+//        min = 280000
+        plotSpace.xRange = CPTPlotRange(location: 0, length: 200)
+        plotSpace.yRange = CPTPlotRange(location: 280000, length: 290000)
+        print("Done")
     }
     
     
@@ -325,10 +363,18 @@ class CameraViewController: UIViewController {
 
 }
 extension CameraViewController: CPTPlotDataSource, CPTPlotSpaceDelegate {
-    //-(NSUInteger)numberOfRecordsForPlot:(nonnull CPTPlot *)plot;
-    func numberOfRecordsForPlot(plot: CPTPlot) -> UInt {
+    /** @brief @required The number of data points for the plot.
+     *  @param plot The plot.
+     *  @return The number of data points for the plot.
+     **/
+    func numberOfRecords(for plot: CPTPlot) -> UInt {
         return UInt(data.count)
     }
+
+//    //-(NSUInteger)numberOfRecordsForPlot:(nonnull CPTPlot *)plot;
+//    func numberOfRecordsForPlot(plot: CPTPlot) -> UInt {
+//        return UInt(data.count)
+//    }
     
     func number(for plot: CPTPlot, field fieldEnum: UInt, record idx: UInt) -> Any? {
         return idx
