@@ -9,7 +9,6 @@
 import UIKit
 import AVFoundation
 import CoreData
-import CorePlot
 import CoreGraphics
 
 import Charts
@@ -18,7 +17,6 @@ class CameraViewController: UIViewController {
 
     @IBOutlet weak var verticalGraphView: BarChartView!
     @IBOutlet weak var horizontalGraphView: BarChartView!
-    var histogramOption : CPTScatterPlotHistogramOption?
     
     @IBOutlet weak var previewView: UIView!
     
@@ -50,26 +48,8 @@ class CameraViewController: UIViewController {
 //        //        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: "updateGraph", userInfo: nil, repeats: true)
 //        //timer = Timer.scheduledTimer(timeInterval: 1.0,invocation: updateGraph, repeats: true)
 //        
-        horizontalGraphView.delegate = self
+//        horizontalGraphView.delegate = self
         horizontalGraphView.noDataText = "no data available"
-    }
-    
-    
-    func numberOfRecords(for: CPTPlot!) -> AnyObject? {
-        print("COUNT: ", data.count as AnyObject)
-        return data.count as AnyObject
-    }
-    
-    func numberForPlot(plot: CPTPlot!, field fieldEnum: UInt, recordIndex idx: UInt) -> NSNumber! {
-        
-        switch fieldEnum {
-        case 0:
-            return idx as NSNumber
-        case 1:
-            return data[Int(idx)] as NSNumber
-        default:
-            return 0
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
