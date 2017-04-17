@@ -108,7 +108,9 @@ class CameraViewController: UIViewController {
         self.verticalGraphView.drawMarkers = false
         self.verticalGraphView.minOffset = 0.0
         
-        
+        self.horizontalGraphView.autoScaleMinMaxEnabled = true
+        self.horizontalGraphView.xAxis.granularityEnabled = true
+        self.horizontalGraphView.xAxis.granularity = 1.0
         
     }
     
@@ -472,6 +474,10 @@ class CameraViewController: UIViewController {
                 }
             })
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        timer?.invalidate()
     }
 
     /*
