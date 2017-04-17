@@ -8,7 +8,7 @@ target 'BumpTracker' do
   # Pods for BumpTracker
 
  pod 'CorePlot', '~> 2.2'
-
+ pod 'Charts', '~> 3.0.1'
 
   target 'BumpTrackerTests' do
     inherit! :search_paths

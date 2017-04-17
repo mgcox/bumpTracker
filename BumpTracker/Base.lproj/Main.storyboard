@@ -19,7 +19,7 @@
         <scene sceneID="a2Q-on-dIq">
             <objects>
                 <navigationController id="055-XQ-eIN" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" translucent="NO" id="8SV-H7-vRX">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="8SV-H7-vRX">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" red="0.98039215690000003" green="0.63921568630000003" blue="0.92941176469999998" alpha="1" colorSpace="calibratedRGB"/>
@@ -254,7 +254,7 @@
                                     <imageView userInteractionEnabled="NO" alpha="0.40000000000000002" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Sillouhette" translatesAutoresizingMaskIntoConstraints="NO" id="KZs-1o-ayn">
                                         <rect key="frame" x="0.0" y="0.0" width="343" height="519"/>
                                     </imageView>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rYQ-v5-uW8" customClass="CPTGraphHostingView">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rYQ-v5-uW8" customClass="BarChartView" customModule="Charts">
                                         <rect key="frame" x="279" y="57" width="64" height="462"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
@@ -273,7 +273,7 @@
                                     <constraint firstItem="KZs-1o-ayn" firstAttribute="top" secondItem="iea-7r-eLC" secondAttribute="top" id="eFd-Yt-mGe"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H8i-1Y-YTk" customClass="CPTGraphHostingView">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H8i-1Y-YTk" customClass="BarChartView" customModule="Charts">
                                 <rect key="frame" x="16" y="8" width="343" height="57"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>

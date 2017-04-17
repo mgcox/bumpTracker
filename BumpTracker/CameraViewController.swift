@@ -12,11 +12,14 @@ import CoreData
 import CorePlot
 import CoreGraphics
 
+import Charts
 
 class CameraViewController: UIViewController {
 
     @IBOutlet weak var verticalGraphView: CPTGraphHostingView!
     @IBOutlet weak var horizontalGraphView: CPTGraphHostingView!
+    var histogramOption : CPTScatterPlotHistogramOption?
+    
     @IBOutlet weak var previewView: UIView!
     
     @IBOutlet weak var takePhotoButton: UIButton!
@@ -32,7 +35,8 @@ class CameraViewController: UIViewController {
     var data = [Double]()
     var max = 100.0
     var min = 0.0
-    var graph = CPTXYGraph(frame: CGRect.zero)
+  //  var graph = CPTXYGraph(frame: CGRect.zero)
+    //let plot = CPTScatterPlot()
     var timer: Timer?
     var y = 0.0
     
@@ -41,55 +45,52 @@ class CameraViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // create graph
-        let plotSpace = graph.defaultPlotSpace as! CPTXYPlotSpace
-        
-        
-        plotSpace.delegate = self
-        //plotSpace.data
-        
-        graph.title = "Profile"
-        graph.paddingLeft = 0
-        graph.paddingTop = 0
-        graph.paddingRight = 0
-        graph.paddingBottom = 0
-        //graph.plotAreaFrame!.masksToBorder = false
-        // hide the axes
-        var axes = graph.axisSet as! CPTXYAxisSet
-        var lineStyle = CPTMutableLineStyle()
-        lineStyle.lineWidth = 0
-        axes.xAxis?.axisLineStyle = lineStyle
-        axes.yAxis?.axisLineStyle = lineStyle
-        
-        for i in 0...100{
-            data.append(Double(i))
-        }
-        print(data)
-        
-        let plot = CPTScatterPlot()
-        plot.identifier = "Scatter Plot" as NSCoding & NSCopying & NSObjectProtocol
-//        plot.delegate = self
-        plot.dataSource = self
-        graph.add(plot)
-        
-        
-        plotSpace.scale(toFit:[plot])
-        
-        //This should be the legnth of the data
-        plotSpace.scale(toFit: [plot])
-//        plotSpace.xRange = CPTPlotRange(location: 0, length: NSNumber(data.count))
-//        plotSpace.yRange = CPTPlotRange(location: 0, length: NSNumber(max))
-        
-        // add a pie plot
-//        var pie = CPTPieChart()
-//        pie.dataSource = self
-//        pie.pieRadius = (self.view.frame.size.width * 0.9)/2
-//        graph.add(pie)
-        
-        self.horizontalGraphView.hostedGraph = graph
-        //        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: "updateGraph", userInfo: nil, repeats: true)
-        //timer = Timer.scheduledTimer(timeInterval: 1.0,invocation: updateGraph, repeats: true)
-        
+//        // create graph
+//        let plotSpace = graph.defaultPlotSpace as! CPTXYPlotSpace
+//        
+//        
+//        plotSpace.delegate = self
+//        //plotSpace.data
+//        
+//        graph.title = "Profile"
+//        graph.paddingLeft = 0
+//        graph.paddingTop = 0
+//        graph.paddingRight = 0
+//        graph.paddingBottom = 0
+//        //graph.plotAreaFrame!.masksToBorder = false
+//        // hide the axes
+//        var axes = graph.axisSet as! CPTXYAxisSet
+//        var lineStyle = CPTMutableLineStyle()
+//        lineStyle.lineWidth = 0
+//        axes.xAxis?.axisLineStyle = lineStyle
+//        axes.yAxis?.axisLineStyle = lineStyle
+//        
+////        for i in 0...100{
+////            data.append(Double(i))
+////        }
+////        print(data)
+//        plot.identifier = "Scatter Plot" as NSCoding & NSCopying & NSObjectProtocol
+//      //  plot.delegate = self
+//        plot.dataSource = self
+//        graph.add(plot)
+//       
+//        
+//        
+//        plotSpace.scale(toFit:[plot])
+//        
+//        //plotSpace.xRange = CPTPlotRange(location: 0, length: NSNumber(data.count))
+//        //plotSpace.yRange = CPTPlotRange(location: 0, length: NSNumber(max))
+//        
+//        // add a pie plot
+////        var pie = CPTPieChart()
+////        pie.dataSource = self
+////        pie.pieRadius = (self.view.frame.size.width * 0.9)/2
+////        graph.add(pie)
+//        
+//        self.horizontalGraphView.hostedGraph = graph
+//        //        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: "updateGraph", userInfo: nil, repeats: true)
+//        //timer = Timer.scheduledTimer(timeInterval: 1.0,invocation: updateGraph, repeats: true)
+//        
 
 
     }
@@ -159,7 +160,7 @@ class CameraViewController: UIViewController {
                 captureSession.startRunning()
                 
                 
-                timer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(updateGraph), userInfo: nil, repeats: true)
+                timer = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(updateGraph), userInfo: nil, repeats: false)
             }
         }
         
@@ -243,8 +244,6 @@ class CameraViewController: UIViewController {
                 return
         }
         
-        self.sumProfile(photo: photoTaken)
-        
         // 1
         let managedContext =
             appDelegate.persistentContainer.viewContext
@@ -277,11 +276,11 @@ class CameraViewController: UIViewController {
     }
     
     func sumProfile(photo: UIImage){
+        print("Entered sumProfile")
         let start = DispatchTime.now()
 //        var image = photo.cgImage
         var grayScaledImage = [Int]()
-        data = [Double]()
-        
+    
         let size = photo.size
         let width = Int(size.width)
         let height = Int(size.height)
@@ -289,16 +288,8 @@ class CameraViewController: UIViewController {
         print("Height: " + String(height))
         let dataSize = size.width * size.height * 4
         var pixelData = [UInt8](repeating: 0, count: Int(dataSize))
-        let colorSpace = CGColorSpaceCreateDeviceRGB()
-        let context = CGContext(data: &pixelData,
-                                width: width,
-                                height: height,
-                                bitsPerComponent: 8,
-                                bytesPerRow: 4 * Int(size.width),
-                                space: colorSpace,
-                                bitmapInfo: CGImageAlphaInfo.noneSkipLast.rawValue)
-        guard let cgImage = photo.cgImage else { return }
-        context?.draw(cgImage, in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
+        //let colorSpace = CGColorSpaceCreateDeviceRGB()
+            // context?.draw(cgImage, in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
         
         // B&W
         for i in 0...(width-1) {
@@ -325,7 +316,11 @@ class CameraViewController: UIViewController {
                 tempSum += grayScaledImage[offset]
             }
             // Append to sum array.
-            data.append(Double(tempSum))
+            if(i%500 == 0){
+                //self.data.append(Double(tempSum))
+                let random = Double(arc4random_uniform(5000))
+                self.data.append(random)
+            }
         }
 //        data = profile
 //        print("Reloading data!", data)
@@ -341,35 +336,121 @@ class CameraViewController: UIViewController {
     }
     
     func updateGraph(){
-        let serialQueue = DispatchQueue(label: "graphQueue")
-        serialQueue.sync {
+        DispatchQueue.global(qos: .background).async
+            {
             //Place computation in here
-            getSnapShot(completion: { (snapshot) in
+
+//            getSnapShot(completion: { (snapshot) in
+//                
+//                //Process the snapshot and add it to the graph in here
+//                
+//                DispatchQueue.main.async {
+//                    self.horizontalGraphView.hostedGraph = self.graph
+//                }
+//            })
+
+           // self.sumProfile(photo: self.previousPhoto!)
+                // create graph
                 
-                //Process the snapshot and add it to the graph in here
                 
-                DispatchQueue.main.async {
-                    self.horizontalGraphView.hostedGraph = self.graph
+            DispatchQueue.main.async {
+                print("Updating")
+                //self.graph.reloadData()
+                let graph = CPTXYGraph(frame: CGRect.zero)
+                let plotSpace =  CPTXYPlotSpace()
+                
+                
+                plotSpace.delegate = self
+                plotSpace.allowsMomentum = true
+                //plotSpace.data
+                
+                graph.title = "Profile"
+                graph.paddingLeft = 0
+                graph.paddingTop = 0
+                graph.paddingRight = 0
+                graph.paddingBottom = 0
+                //graph.plotAreaFrame!.masksToBorder = false
+                // hide the axes
+                let axes = graph.axisSet as! CPTXYAxisSet
+                var lineStyle = CPTMutableLineStyle()
+                //lineStyle.lineWidth = 5
+                
+               
+                axes.xAxis?.axisLineStyle = lineStyle
+                axes.yAxis?.axisLineStyle = lineStyle
+                
+                for i in 0...10{
+                    let random = Double(arc4random_uniform(1000))
+                    self.data.append(random)
+//                    if i <= 50{
+//                        self.data.append(Double(i))
+//                    }else{
+//                        self.data.append(Double(50-(i-50)))
+//                    }
+                    
+                   // self.data.append(Double(i))
                 }
-            })
+                let plot = CPTScatterPlot()
+                let plotLineStyle = plot.dataLineStyle!.mutableCopy() as! CPTMutableLineStyle
+                plot.cachePrecision = .double
+                
+                //plotLineStyle.miterLimit = 1.0
+                plotLineStyle.lineWidth = 3.0
+                plotLineStyle.lineJoin = .round
+                plotLineStyle.lineCap = .round
+                plotLineStyle.lineColor = CPTColor.magenta()
+                
+                let symbolGradient = CPTGradient(beginning: CPTColor(componentRed: 0.75, green: 0.75, blue: 1.0, alpha: 1.0), ending: CPTColor.cyan())
+                symbolGradient.gradientType = .radial
+                symbolGradient.startAnchor = CGPoint(x: 0.25, y: 0.75)
+                let plotSymbol = CPTPlotSymbol.ellipse()
+                plotSymbol.fill = CPTFill(gradient: symbolGradient)
+                plotSymbol.lineStyle = nil;
+               // plotSymbol.size = CGSize(width: GGs, height: kPlotSymbolSize)
+                plot.plotSymbol = plotSymbol;
+                //plot.plotSymbolMarginForHitDetection = CGFloat(CPTPlotSymbolType) * CGFloat(1.5)
+                
+                
+                
+                plot.dataLineStyle = plotLineStyle
+               // plot.histogramOption = .histogram
+                plot.interpolation = .curved
+                
+               // plot.identifier =
+                //        plot.delegate = self
+                plot.dataSource = self
+                graph.add(plot)
+                
+                //plotSpace.scale(toFit:[plot])
+                
+                
+                //let valuesCount = NSNumber(data.count)
+                
+                //This should be the legnth of the data
+                plotSpace.xRange = CPTPlotRange(location: 0, length: NSNumber(value: self.data.count-1))
+                plotSpace.yRange = CPTPlotRange(location: 0, length: (self.data.max()! + 20) as NSNumber)
+
+                
+                graph.reloadData()
+                self.horizontalGraphView.hostedGraph = graph
+                // If you want a view that tracks the latest 20 values use the following.
+                //        let plotSpace = graph.defaultPlotSpace as! CPTXYPlotSpace
+                ////        max = 290000
+                ////        min = 280000
+                //        plotSpace.xRange = CPTPlotRange(location: 0, length: 200)
+                //        plotSpace.yRange = CPTPlotRange(location: 280000, length: 290000)
+            }
+        
         }
         
         //Update UI after
-        
-        print("Update!", y)
         //data.append(y)
-        y += 2
-        
-        graph.title="Test \(y)"
-        graph.reloadData()
-        self.horizontalGraphView.hostedGraph = graph
-        // If you want a view that tracks the latest 20 values use the following.
-//        let plotSpace = graph.defaultPlotSpace as! CPTXYPlotSpace
-////        max = 290000
-////        min = 280000
-//        plotSpace.xRange = CPTPlotRange(location: 0, length: 200)
-//        plotSpace.yRange = CPTPlotRange(location: 280000, length: 290000)
-        print("Done")
+//        y += 2
+//        
+//                print("Data", data)
+//        print("Summing", plotSpace.xRange, plotSpace.yRange)
+//        graph.reloadData()
+//        self.horizontalGraphView.hostedGraph = graph
     }
     
     func getSnapShot(completion: @escaping (_ result : UIImage) -> Void) {
@@ -407,7 +488,7 @@ extension CameraViewController: CPTPlotDataSource, CPTPlotSpaceDelegate {
      *  @return The number of data points for the plot.
      **/
     func numberOfRecords(for plot: CPTPlot) -> UInt {
-        return UInt(data.count)
+        return UInt(self.data.count)
     }
 
 //    //-(NSUInteger)numberOfRecordsForPlot:(nonnull CPTPlot *)plot;
@@ -416,7 +497,9 @@ extension CameraViewController: CPTPlotDataSource, CPTPlotSpaceDelegate {
 //    }
     
     func number(for plot: CPTPlot, field fieldEnum: UInt, record idx: UInt) -> Any? {
-        return idx
+//        return data[Int(idx)]
+       print(data[Int(idx)])
+        return UInt(self.data[Int(idx)])
     }
     
 //    func numberForPlot(plot: CPTPlot, field fieldEnum: UInt, recordIndex idx: UInt) -> AnyObject? {
