@@ -273,7 +273,7 @@
                                     <constraint firstItem="KZs-1o-ayn" firstAttribute="top" secondItem="iea-7r-eLC" secondAttribute="top" id="eFd-Yt-mGe"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H8i-1Y-YTk" customClass="BarChartView" customModule="Charts">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H8i-1Y-YTk" customClass="LineChartView" customModule="Charts">
                                 <rect key="frame" x="16" y="8" width="343" height="118"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>

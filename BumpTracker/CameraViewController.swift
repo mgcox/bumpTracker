@@ -16,7 +16,7 @@ import Charts
 class CameraViewController: UIViewController {
 
     @IBOutlet weak var verticalGraphView: UIView!
-    @IBOutlet weak var horizontalGraphView: UIView!
+    @IBOutlet weak var horizontalGraphView: LineChartView!
     
     @IBOutlet weak var previewView: UIView!
     
@@ -52,30 +52,31 @@ class CameraViewController: UIViewController {
       //  horizontalGraphView.noDataText = "no data available"
         
         
-        let chart = LineChartView(frame: self.horizontalGraphView.frame)
+//        let chart = LineChartView(frame: self.horizontalGraphView.frame)
+//        
+//        let yVals: [Double] = [ 873, 568, 937, 726, 696, 687, 180, 389, 90, 928, 890, 437]
+//        var entries = [ BarChartDataEntry]()
+//        for (i, v) in yVals.enumerated() {
+//            let entry = BarChartDataEntry()
+//            entry.x = Double( i)
+//            entry.y = v
+//            
+//            entries.append( entry)
+//        }
+//        
+//        
+//        let set = LineChartDataSet( values: entries, label: "Bar Chart")
+//        let data = LineChartData( dataSet: set)
+//        chart.data = data
+//        // no data text
+//        chart.noDataText = "No data available"
+//        // user interaction
+//        chart.isUserInteractionEnabled = false
+//        
+//        //horizontalGraphView = chart
+//        
+//        self.horizontalGraphView.addSubview( chart)
         
-        let yVals: [Double] = [ 873, 568, 937, 726, 696, 687, 180, 389, 90, 928, 890, 437]
-        var entries = [ BarChartDataEntry]()
-        for (i, v) in yVals.enumerated() {
-            let entry = BarChartDataEntry()
-            entry.x = Double( i)
-            entry.y = v
-            
-            entries.append( entry)
-        }
-        
-        
-        let set = LineChartDataSet( values: entries, label: "Bar Chart")
-        let data = LineChartData( dataSet: set)
-        chart.data = data
-        // no data text
-        chart.noDataText = "No data available"
-        // user interaction
-        chart.isUserInteractionEnabled = false
-        
-        //horizontalGraphView = chart
-        
-        self.horizontalGraphView.addSubview( chart)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -240,11 +241,11 @@ class CameraViewController: UIViewController {
         
     }
     
-    func sumProfile(photo: UIImage, axis: String){
+    func sumProfile(photo: UIImage, axis: String) -> [Double]{
         let start = DispatchTime.now()
         
         var grayScaledImage = [Int]()
-        data = [Double]()
+        var dataArray = [Double]()
     
         let size = photo.size
         let width = Int(size.width)
@@ -261,7 +262,7 @@ class CameraViewController: UIViewController {
                                 bytesPerRow: 4 * Int(size.width),
                                 space: colorSpace,
                                 bitmapInfo: CGImageAlphaInfo.noneSkipLast.rawValue)
-        guard let cgImage = photo.cgImage else { return }
+        guard let cgImage = photo.cgImage else { return dataArray}
         context?.draw(cgImage, in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
 
         
@@ -287,7 +288,7 @@ class CameraViewController: UIViewController {
                     tempSum += grayScaledImage[offset]
                 }
                 // Append to sum array.
-                self.data.append(Double(tempSum))
+                dataArray.append(Double(tempSum))
             }
         } else if axis == "y"{
             for j in 0...(height-1){
@@ -296,7 +297,7 @@ class CameraViewController: UIViewController {
                     let offset = ((width * Int(j) + Int(i)%(width-1)))
                     tempSum += grayScaledImage[offset]
                 }
-                self.data.append(Double(tempSum))
+                dataArray.append(Double(tempSum))
             }
         }
         
@@ -305,6 +306,8 @@ class CameraViewController: UIViewController {
             let diff = Double(end.uptimeNanoseconds - start.uptimeNanoseconds) / 1_000_000_000 // Gives seconds
             print("Sum finished in \(diff) seconds.")
         }
+        
+        return dataArray
     }
     
     func updateGraph(){
@@ -312,14 +315,47 @@ class CameraViewController: UIViewController {
             {
 
                 print("X")
-                self.sumProfile(photo: self.previousPhoto!, axis:"x")
+                
+                let xaxisArray = self.sumProfile(photo: self.previousPhoto!, axis:"x")
+                
+                let chart = LineChartView(frame: self.horizontalGraphView.frame)
+
+                var entries = [ BarChartDataEntry]()
+                for (i, v) in xaxisArray.enumerated() {
+                    let entry = BarChartDataEntry()
+                    entry.x = Double( i)
+                    entry.y = v
+                    
+                    entries.append( entry)
+                }
+                
+                
+                let set = LineChartDataSet( values: entries, label: "")
+                set.lineWidth = 0.2
+                set.circleRadius = 1
+                let data = LineChartData( dataSet: set)
+                chart.data = data
+                // no data text
+               // chart.noDataText = "No data available"
+                // user interaction
+                chart.isUserInteractionEnabled = false
+
+                //horizontalGraphView = chart
+                
+                
+                
+                
+                
+                
                 print("Y")
-                self.sumProfile(photo: self.previousPhoto!, axis:"y")
+               // self.sumProfile(photo: self.previousPhoto!, axis:"y")
                 // create graph
                 
             DispatchQueue.main.async {
                 print("Updating")
-              
+              self.horizontalGraphView.data = data
+                self.horizontalGraphView.notifyDataSetChanged()
+                
             }
         
         }
