@@ -15,8 +15,8 @@ import Charts
 
 class CameraViewController: UIViewController {
 
-    @IBOutlet weak var verticalGraphView: BarChartView!
-    @IBOutlet weak var horizontalGraphView: BarChartView!
+    @IBOutlet weak var verticalGraphView: UIView!
+    @IBOutlet weak var horizontalGraphView: UIView!
     
     @IBOutlet weak var previewView: UIView!
     
@@ -49,7 +49,33 @@ class CameraViewController: UIViewController {
 //        //timer = Timer.scheduledTimer(timeInterval: 1.0,invocation: updateGraph, repeats: true)
 //        
 //        horizontalGraphView.delegate = self
-        horizontalGraphView.noDataText = "no data available"
+      //  horizontalGraphView.noDataText = "no data available"
+        
+        
+        let chart = LineChartView(frame: self.horizontalGraphView.frame)
+        
+        let yVals: [Double] = [ 873, 568, 937, 726, 696, 687, 180, 389, 90, 928, 890, 437]
+        var entries = [ BarChartDataEntry]()
+        for (i, v) in yVals.enumerated() {
+            let entry = BarChartDataEntry()
+            entry.x = Double( i)
+            entry.y = v
+            
+            entries.append( entry)
+        }
+        
+        
+        let set = LineChartDataSet( values: entries, label: "Bar Chart")
+        let data = LineChartData( dataSet: set)
+        chart.data = data
+        // no data text
+        chart.noDataText = "No data available"
+        // user interaction
+        chart.isUserInteractionEnabled = false
+        
+        //horizontalGraphView = chart
+        
+        self.horizontalGraphView.addSubview( chart)
     }
     
     override func viewWillAppear(_ animated: Bool) {
