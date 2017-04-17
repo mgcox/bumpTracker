@@ -254,30 +254,25 @@
                                     <imageView userInteractionEnabled="NO" alpha="0.40000000000000002" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Sillouhette" translatesAutoresizingMaskIntoConstraints="NO" id="KZs-1o-ayn">
                                         <rect key="frame" x="0.0" y="0.0" width="343" height="519"/>
                                     </imageView>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rYQ-v5-uW8" customClass="BarChartView" customModule="Charts">
-                                        <rect key="frame" x="279" y="57" width="64" height="462"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="64" id="Jvk-rO-0Cc"/>
-                                        </constraints>
-                                    </view>
                                 </subviews>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="rYQ-v5-uW8" secondAttribute="trailing" id="5xc-CL-8Ze"/>
                                     <constraint firstAttribute="trailing" secondItem="KZs-1o-ayn" secondAttribute="trailing" id="BTB-Po-bZ5"/>
                                     <constraint firstAttribute="bottom" secondItem="KZs-1o-ayn" secondAttribute="bottom" id="ObR-Nx-6Wp"/>
                                     <constraint firstItem="KZs-1o-ayn" firstAttribute="leading" secondItem="iea-7r-eLC" secondAttribute="leading" id="PV2-rj-luO"/>
-                                    <constraint firstItem="rYQ-v5-uW8" firstAttribute="top" secondItem="iea-7r-eLC" secondAttribute="top" constant="57" id="QdI-3Z-UG7"/>
-                                    <constraint firstAttribute="bottom" secondItem="rYQ-v5-uW8" secondAttribute="bottom" id="Sca-8O-YSA"/>
                                     <constraint firstItem="KZs-1o-ayn" firstAttribute="top" secondItem="iea-7r-eLC" secondAttribute="top" id="eFd-Yt-mGe"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rYQ-v5-uW8" customClass="LineChartView" customModule="Charts">
+                                <rect key="frame" x="295" y="65" width="64" height="462"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H8i-1Y-YTk" customClass="LineChartView" customModule="Charts">
-                                <rect key="frame" x="16" y="8" width="343" height="118"/>
+                                <rect key="frame" x="16" y="8" width="343" height="57"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="118" id="K9N-sM-N8B"/>
+                                    <constraint firstAttribute="height" constant="57" id="K9N-sM-N8B"/>
                                 </constraints>
                             </view>
                         </subviews>

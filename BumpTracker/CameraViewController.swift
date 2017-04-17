@@ -15,7 +15,7 @@ import Charts
 
 class CameraViewController: UIViewController {
 
-    @IBOutlet weak var verticalGraphView: UIView!
+    @IBOutlet weak var verticalGraphView: LineChartView!
     @IBOutlet weak var horizontalGraphView: LineChartView!
     
     @IBOutlet weak var previewView: UIView!
@@ -30,7 +30,10 @@ class CameraViewController: UIViewController {
     var previousPhoto : UIImage?
     var captureDevice : AVCaptureDevice?
     
-    var data = [Double]()
+    var previousPhotoXdata = LineChartDataSet()
+    var previousPhotoYdata = LineChartDataSet()
+    
+    
     var max = 100.0
     var min = 0.0
   //  var graph = CPTXYGraph(frame: CGRect.zero)
@@ -76,6 +79,36 @@ class CameraViewController: UIViewController {
 //        //horizontalGraphView = chart
 //        
 //        self.horizontalGraphView.addSubview( chart)
+        
+        
+        self.horizontalGraphView.xAxis.drawGridLinesEnabled = false
+        self.horizontalGraphView.xAxis.drawLabelsEnabled = false
+        self.horizontalGraphView.xAxis.drawAxisLineEnabled = false
+        self.horizontalGraphView.leftAxis.drawGridLinesEnabled = false
+        self.horizontalGraphView.leftAxis.drawLabelsEnabled = false
+        self.horizontalGraphView.leftAxis.drawAxisLineEnabled = false
+        self.horizontalGraphView.rightAxis.drawGridLinesEnabled = false
+        self.horizontalGraphView.rightAxis.drawLabelsEnabled = false
+        self.horizontalGraphView.rightAxis.drawAxisLineEnabled = false
+        self.horizontalGraphView.chartDescription = nil
+        self.horizontalGraphView.drawMarkers = false
+        self.horizontalGraphView.minOffset = 0.0
+        
+        
+        self.verticalGraphView.xAxis.drawGridLinesEnabled = false
+        self.verticalGraphView.xAxis.drawLabelsEnabled = false
+        self.verticalGraphView.xAxis.drawAxisLineEnabled = false
+        self.verticalGraphView.leftAxis.drawGridLinesEnabled = false
+        self.verticalGraphView.leftAxis.drawLabelsEnabled = false
+        self.verticalGraphView.leftAxis.drawAxisLineEnabled = false
+        self.verticalGraphView.rightAxis.drawGridLinesEnabled = false
+        self.verticalGraphView.rightAxis.drawLabelsEnabled = false
+        self.verticalGraphView.rightAxis.drawAxisLineEnabled = false
+        self.verticalGraphView.chartDescription = nil
+        self.verticalGraphView.drawMarkers = false
+        self.verticalGraphView.minOffset = 0.0
+        
+        
         
     }
     
@@ -126,9 +159,58 @@ class CameraViewController: UIViewController {
                 captureSession.startRunning()
                 
                 
-                timer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(updateGraph), userInfo: nil, repeats: false)
+                startGraphing()
+                
+                
+                
             }
         }
+        
+    }
+    
+    func startGraphing(){
+        
+        getPreviousPhotoSumData()
+        
+        timer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(updateGraph), userInfo: nil, repeats: true)
+    }
+    
+    func getPreviousPhotoSumData(){
+        
+        let xaxisArray = self.sumProfile(photo: self.previousPhoto!, axis:"x")
+        
+        
+        var entries = [ BarChartDataEntry]()
+        for (i, v) in xaxisArray.enumerated() {
+            let entry = BarChartDataEntry()
+            entry.x = Double( i)
+            entry.y = v
+            
+            entries.append( entry)
+        }
+        
+        
+        self.previousPhotoXdata = LineChartDataSet( values: entries, label: "")
+        self.previousPhotoXdata.lineWidth = 0.2
+        self.previousPhotoXdata.circleRadius = 1
+        
+        
+        print("Y")
+        let verticalArray = self.sumProfile(photo: self.previousPhoto!, axis:"y")
+        
+        var yentries = [ BarChartDataEntry]()
+        for (i, v) in verticalArray.enumerated() {
+            let entry = BarChartDataEntry()
+            entry.x = v
+            entry.y = Double( i)
+            
+            yentries.append( entry)
+        }
+        
+        self.previousPhotoYdata = LineChartDataSet( values: yentries, label: "")
+        self.previousPhotoYdata.lineWidth = 0.2
+        self.previousPhotoYdata.circleRadius = 1
+
         
     }
     
@@ -313,51 +395,62 @@ class CameraViewController: UIViewController {
     func updateGraph(){
         DispatchQueue.global(qos: .background).async
             {
-
-                print("X")
                 
-                let xaxisArray = self.sumProfile(photo: self.previousPhoto!, axis:"x")
-                
-                let chart = LineChartView(frame: self.horizontalGraphView.frame)
-
-                var entries = [ BarChartDataEntry]()
-                for (i, v) in xaxisArray.enumerated() {
-                    let entry = BarChartDataEntry()
-                    entry.x = Double( i)
-                    entry.y = v
+                self.getSnapShot(completion: { (snappedImage) in
+                    print("X")
                     
-                    entries.append( entry)
-                }
+                    let xaxisArray = self.sumProfile(photo: snappedImage, axis:"x")
+                    
+                    
+                    var entries = [ BarChartDataEntry]()
+                    for (i, v) in xaxisArray.enumerated() {
+                        let entry = BarChartDataEntry()
+                        entry.x = Double( i)
+                        entry.y = v
+                        
+                        entries.append( entry)
+                    }
+                    
+                    
+                    let set = LineChartDataSet( values: entries, label: "")
+                    set.lineWidth = 0.2
+                    set.circleRadius = 1
+                    //let data = LineChartData( dataSet: set)
+                    let data = LineChartData(dataSets: [set,self.previousPhotoXdata])
+                    
+                    print("Y")
+                    let verticalArray = self.sumProfile(photo: snappedImage, axis:"y")
+                    
+                    var yentries = [ BarChartDataEntry]()
+                    for (i, v) in verticalArray.enumerated() {
+                        let entry = BarChartDataEntry()
+                        entry.x = v
+                        entry.y = Double( i)
+                        
+                        yentries.append( entry)
+                    }
+                    
+                    
+                    let yset = LineChartDataSet( values: yentries, label: "")
+                    yset.lineWidth = 0.2
+                    yset.circleRadius = 1
+                   // let ydata = LineChartData( dataSet: yset)
+                    let ydata = LineChartData(dataSets: [yset,self.previousPhotoYdata])
+                    
+                    DispatchQueue.main.async {
+                        print("Updating")
+                        self.horizontalGraphView.data = data
+                        
+                        self.horizontalGraphView.notifyDataSetChanged()
+                        
+                        self.verticalGraphView.data = ydata
+                        self.verticalGraphView.notifyDataSetChanged()
+                    }
+                    
+                    
+                    
+                })
                 
-                
-                let set = LineChartDataSet( values: entries, label: "")
-                set.lineWidth = 0.2
-                set.circleRadius = 1
-                let data = LineChartData( dataSet: set)
-                chart.data = data
-                // no data text
-               // chart.noDataText = "No data available"
-                // user interaction
-                chart.isUserInteractionEnabled = false
-
-                //horizontalGraphView = chart
-                
-                
-                
-                
-                
-                
-                print("Y")
-               // self.sumProfile(photo: self.previousPhoto!, axis:"y")
-                // create graph
-                
-            DispatchQueue.main.async {
-                print("Updating")
-              self.horizontalGraphView.data = data
-                self.horizontalGraphView.notifyDataSetChanged()
-                
-            }
-        
         }
         
 

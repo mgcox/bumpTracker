@@ -284,7 +284,7 @@
 				TargetAttributes = {
 					949ACE6A1E54D555005FCC71 = {
 						CreatedOnToolsVersion = 8.2;
-						DevelopmentTeam = NVG7TPF7EU;
+						DevelopmentTeam = 4QWLAVZU44;
 						LastSwiftMigration = 0820;
 						ProvisioningStyle = Automatic;
 					};
@@ -658,7 +658,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = NVG7TPF7EU;
+				DEVELOPMENT_TEAM = 4QWLAVZU44;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/BumpTracker",
@@ -680,7 +680,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				DEVELOPMENT_TEAM = NVG7TPF7EU;
+				DEVELOPMENT_TEAM = 4QWLAVZU44;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/BumpTracker",
