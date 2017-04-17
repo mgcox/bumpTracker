@@ -119,10 +119,7 @@ class CameraViewController: UIViewController {
                 captureSession.startRunning()
                 
                 
-                timer = Timer.scheduledTimer(timeInterval: 10.0, target: self, selector: #selector(updateGraph), userInfo: nil, repeats: false)
-                
-                
-                
+                timer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(updateGraph), userInfo: nil, repeats: false)
             }
         }
         
@@ -237,11 +234,11 @@ class CameraViewController: UIViewController {
         
     }
     
-    func sumProfile(photo: UIImage){
-        print("Entered sumProfile")
+    func sumProfile(photo: UIImage, axis: String){
         let start = DispatchTime.now()
-//        var image = photo.cgImage
+        
         var grayScaledImage = [Int]()
+        data = [Double]()
     
         let size = photo.size
         let width = Int(size.width)
@@ -250,17 +247,22 @@ class CameraViewController: UIViewController {
         print("Height: " + String(height))
         let dataSize = size.width * size.height * 4
         var pixelData = [UInt8](repeating: 0, count: Int(dataSize))
-        //let colorSpace = CGColorSpaceCreateDeviceRGB()
-            // context?.draw(cgImage, in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
+        let colorSpace = CGColorSpaceCreateDeviceRGB()
+        let context = CGContext(data: &pixelData,
+                                width: Int(size.width),
+                                height: Int(size.height),
+                                bitsPerComponent: 8,
+                                bytesPerRow: 4 * Int(size.width),
+                                space: colorSpace,
+                                bitmapInfo: CGImageAlphaInfo.noneSkipLast.rawValue)
+        guard let cgImage = photo.cgImage else { return }
+        context?.draw(cgImage, in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
+
         
         // B&W
         for i in 0...(width-1) {
-//            print("i is " + String(i))
             for j in 0...(height-1) {
-                //Here is your raw pixels
                 let offset = 4 * ((width * Int(j)) + Int(i))
-//                let alpha = pixelData[offset]
-//                print("offset is" + String(offset))
                 let red = pixelData[offset+1]
                 let green = pixelData[offset+2]
                 let blue = pixelData[offset+3]
@@ -270,37 +272,44 @@ class CameraViewController: UIViewController {
         }
         
         // SUM
-        for i in 0...(width-1) {
-            var tempSum = 0
-            for j in 0...(height-1) {
-                let offset = ((width * Int(j)) + Int(i)%(width-1))
-                // Sum along the axis.
-                tempSum += grayScaledImage[offset]
+        if axis == "x"{
+            for i in 0...(width-1) {
+                var tempSum = 0
+                for j in 0...(height-1) {
+                    let offset = ((width * Int(j)) + Int(i)%(width-1))
+                    // Sum along the axis.
+                    tempSum += grayScaledImage[offset]
+                }
+                // Append to sum array.
+                self.data.append(Double(tempSum))
             }
-            // Append to sum array.
-            if(i%500 == 0){
-                //self.data.append(Double(tempSum))
-                let random = Double(arc4random_uniform(5000))
-                self.data.append(random)
+        } else if axis == "y"{
+            for j in 0...(height-1){
+                var tempSum = 0
+                for i in 0...(width-1){
+                    let offset = ((width * Int(j) + Int(i)%(width-1)))
+                    tempSum += grayScaledImage[offset]
+                }
+                self.data.append(Double(tempSum))
             }
         }
-//        data = profile
-//        print("Reloading data!", data)
         
-        // To rescale the plot to include everything in the data array use the following.
-        //plotSpace.scaleToFitPlots([graph.plotAtIndex(0)!])
-        
-//        if self.DEBUG{
-//            let end = DispatchTime.now()
-//            let diff = Double(end.uptimeNanoseconds - start.uptimeNanoseconds) / 1_000_000_000 // Gives seconds
-//            print("Sum finished in \(diff) seconds.")
-//        }
+        if self.DEBUG{
+            let end = DispatchTime.now()
+            let diff = Double(end.uptimeNanoseconds - start.uptimeNanoseconds) / 1_000_000_000 // Gives seconds
+            print("Sum finished in \(diff) seconds.")
+        }
     }
     
     func updateGraph(){
         DispatchQueue.global(qos: .background).async
             {
 
+                print("X")
+                self.sumProfile(photo: self.previousPhoto!, axis:"x")
+                print("Y")
+                self.sumProfile(photo: self.previousPhoto!, axis:"y")
+                // create graph
                 
             DispatchQueue.main.async {
                 print("Updating")
