@@ -197,7 +197,7 @@ class CameraViewController: UIViewController {
         
         self.previousPhotoXdata = LineChartDataSet( values: entries, label: "")
         self.previousPhotoXdata.lineWidth = LINE_WIDTH
-        self.previousPhotoXdata.circleRadius = LINE_WIDTH
+        self.previousPhotoXdata.circleRadius = LINE_WIDTH/2
         
         
         var yentries = [ BarChartDataEntry]()
@@ -211,7 +211,7 @@ class CameraViewController: UIViewController {
         
         self.previousPhotoYdata = LineChartDataSet( values: yentries, label: "")
         self.previousPhotoYdata.lineWidth = LINE_WIDTH
-        self.previousPhotoYdata.circleRadius = LINE_WIDTH
+        self.previousPhotoYdata.circleRadius = LINE_WIDTH/2
 
         
     }
@@ -351,33 +351,31 @@ class CameraViewController: UIViewController {
         
         
         // SUM
-        if axis == "x"{
-            for j in stride(from: (height - 1), to: 0, by: -1) {
-                if(j%100 == 0){
-                    var tempSum = 0
-                    for i in stride(from: (width - 1), to: 0, by: -1) {
-                        let offset = 4 * ((width * Int(j)) + Int(i))
-                        let red = pixelData[offset+1]
-                        let green = pixelData[offset+2]
-                        let blue = pixelData[offset+3]
-                        tempSum += (Int(red) + Int(green) + Int(blue)) / 3
-                    }
-                    xDataArray.append(Double(tempSum))
+        for j in stride(from: (height - 1), to: 0, by: -1) {
+            if(j%100 == 0){
+                var tempSum = 0
+                for i in stride(from: (width - 1), to: 0, by: -1) {
+                    let offset = 4 * ((width * Int(j)) + Int(i))
+                    let red = pixelData[offset+1]
+                    let green = pixelData[offset+2]
+                    let blue = pixelData[offset+3]
+                    tempSum += (Int(red) + Int(green) + Int(blue)) / 3
                 }
+                xDataArray.append(Double(tempSum))
             }
-        } else if axis == "y"{
-            for i in stride(from: (width - 1), to: 0, by: -1) {
-                if(i%100 == 0){
-                    var tempSum = 0
-                    for j in stride(from: (height - 1), to: 0, by: -1) {
-                        let offset = 4 * ((width * Int(j)) + Int(i))
-                        let red = pixelData[offset+1]
-                        let green = pixelData[offset+2]
-                        let blue = pixelData[offset+3]
-                        tempSum += (Int(red) + Int(green) + Int(blue)) / 3
-                    }
-                    yDataArray.append(Double(tempSum))
+        }
+        
+        for i in 0...(width-1) {
+            if(i%50 == 0){
+                var tempSum = 0
+                for j in 0...(height-1) {
+                    let offset = 4 * ((width * Int(j)) + Int(i))
+                    let red = pixelData[offset+1]
+                    let green = pixelData[offset+2]
+                    let blue = pixelData[offset+3]
+                    tempSum += (Int(red) + Int(green) + Int(blue)) / 3
                 }
+                yDataArray.append(Double(tempSum))
             }
         }
         
@@ -408,14 +406,6 @@ class CameraViewController: UIViewController {
                         entries.append( entry)
                     }
                     
-                    
-                    let set = LineChartDataSet( values: entries, label: "")
-                    set.lineWidth = self.LINE_WIDTH
-                    set.circleRadius = self.LINE_WIDTH
-                    //let data = LineChartData( dataSet: set)
-                    let data = LineChartData(dataSets: [set,self.previousPhotoXdata])
-                    data.setDrawValues(false) // Don't draw labels on each individual value
-                    
                     var yentries = [ BarChartDataEntry]()
                     for (i, v) in verticalArray.enumerated() {
                         let entry = BarChartDataEntry()
@@ -425,11 +415,19 @@ class CameraViewController: UIViewController {
                         yentries.append( entry)
                     }
                     
-                    
+                    let set = LineChartDataSet( values: entries, label: "")
                     let yset = LineChartDataSet( values: yentries, label: "")
+                    
+                    set.lineWidth = self.LINE_WIDTH
                     yset.lineWidth = self.LINE_WIDTH
-                    yset.circleRadius = self.LINE_WIDTH
+                    
+                    set.circleRadius = self.LINE_WIDTH/2
+                    yset.circleRadius = self.LINE_WIDTH/2
+                    
+                    let data = LineChartData(dataSets: [set, self.previousPhotoXdata])
                     let ydata = LineChartData(dataSets: [yset,self.previousPhotoYdata])
+                    
+                    data.setDrawValues(false) // Don't draw labels on each individual value
                     ydata.setDrawValues(false) // Don't draw labels on each individual value
                     
                     DispatchQueue.main.async {
