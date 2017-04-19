@@ -33,6 +33,8 @@ class CameraViewController: UIViewController {
     var previousPhotoXdata = LineChartDataSet()
     var previousPhotoYdata = LineChartDataSet()
     
+    let LINE_WIDTH = CGFloat(1.0)
+    
     
     var max = 100.0
     var min = 0.0
@@ -110,7 +112,7 @@ class CameraViewController: UIViewController {
         
         self.horizontalGraphView.autoScaleMinMaxEnabled = true
         self.horizontalGraphView.xAxis.granularityEnabled = true
-        self.horizontalGraphView.xAxis.granularity = 1.0
+//        self.horizontalGraphView.xAxis.granularity = 3
         
     }
     
@@ -174,10 +176,11 @@ class CameraViewController: UIViewController {
         
         getPreviousPhotoSumData()
         
-        timer = Timer.scheduledTimer(timeInterval: 5.0, target: self, selector: #selector(updateGraph), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateGraph), userInfo: nil, repeats: true)
     }
     
     func getPreviousPhotoSumData(){
+        print("Setting previous photo data")
         
         let xaxisArray = self.sumProfile(photo: self.previousPhoto!, axis:"x")
         
@@ -193,8 +196,8 @@ class CameraViewController: UIViewController {
         
         
         self.previousPhotoXdata = LineChartDataSet( values: entries, label: "")
-        self.previousPhotoXdata.lineWidth = 0.2
-        self.previousPhotoXdata.circleRadius = 1
+        self.previousPhotoXdata.lineWidth = LINE_WIDTH
+        self.previousPhotoXdata.circleRadius = LINE_WIDTH
         
         
         print("Y")
@@ -210,8 +213,8 @@ class CameraViewController: UIViewController {
         }
         
         self.previousPhotoYdata = LineChartDataSet( values: yentries, label: "")
-        self.previousPhotoYdata.lineWidth = 0.2
-        self.previousPhotoYdata.circleRadius = 1
+        self.previousPhotoYdata.lineWidth = LINE_WIDTH
+        self.previousPhotoYdata.circleRadius = LINE_WIDTH
 
         
     }
@@ -348,10 +351,10 @@ class CameraViewController: UIViewController {
                                 bitmapInfo: CGImageAlphaInfo.noneSkipLast.rawValue)
         guard let cgImage = photo.cgImage else { return dataArray}
         context?.draw(cgImage, in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
-
         
         // B&W
         for i in 0...(width-1) {
+//            if(i%100 == 0){
             for j in 0...(height-1) {
                 let offset = 4 * ((width * Int(j)) + Int(i))
                 let red = pixelData[offset+1]
@@ -360,28 +363,34 @@ class CameraViewController: UIViewController {
                 let avg = (Int(red) + Int(green) + Int(blue)) / 3
                 grayScaledImage.append(avg)
             }
+//            }
         }
+//        print("Avg", grayScaledImage, "End avg")
         
         // SUM
         if axis == "x"{
-            for i in 0...(width-1) {
-                var tempSum = 0
-                for j in 0...(height-1) {
-                    let offset = ((width * Int(j)) + Int(i)%(width-1))
-                    // Sum along the axis.
-                    tempSum += grayScaledImage[offset]
+            for j in 0...(height-1) {
+                if(j%100 == 0){
+                    var tempSum = 0
+                    for i in 0...(width-1) {
+                        let offset = ((width * Int(j)) + Int(i)%(width-1))
+                        // Sum along the axis.
+                        tempSum += grayScaledImage[offset]
+                        }
+                    // Append to sum array.
+                    dataArray.append(Double(tempSum))
                 }
-                // Append to sum array.
-                dataArray.append(Double(tempSum))
             }
         } else if axis == "y"{
-            for j in 0...(height-1){
-                var tempSum = 0
-                for i in 0...(width-1){
-                    let offset = ((width * Int(j) + Int(i)%(width-1)))
-                    tempSum += grayScaledImage[offset]
+            for i in 0...(width-1){
+                if(i%100 == 0){
+                    var tempSum = 0
+                    for j in 0...(height-1){
+                        let offset = ((width * Int(j) + Int(i)%(width-1)))
+                        tempSum += grayScaledImage[offset]
+                    }
+                    dataArray.append(Double(tempSum))
                 }
-                dataArray.append(Double(tempSum))
             }
         }
         
@@ -415,10 +424,11 @@ class CameraViewController: UIViewController {
                     
                     
                     let set = LineChartDataSet( values: entries, label: "")
-                    set.lineWidth = 0.2
-                    set.circleRadius = 1
+                    set.lineWidth = self.LINE_WIDTH
+                    set.circleRadius = self.LINE_WIDTH
                     //let data = LineChartData( dataSet: set)
                     let data = LineChartData(dataSets: [set,self.previousPhotoXdata])
+                    data.setDrawValues(false) // Don't draw labels on each individual value
                     
                     print("Y")
                     let verticalArray = self.sumProfile(photo: snappedImage, axis:"y")
@@ -434,15 +444,13 @@ class CameraViewController: UIViewController {
                     
                     
                     let yset = LineChartDataSet( values: yentries, label: "")
-                    yset.lineWidth = 0.2
-                    yset.circleRadius = 1
-                   // let ydata = LineChartData( dataSet: yset)
+                    yset.lineWidth = self.LINE_WIDTH
+                    yset.circleRadius = self.LINE_WIDTH
                     let ydata = LineChartData(dataSets: [yset,self.previousPhotoYdata])
+                    ydata.setDrawValues(false) // Don't draw labels on each individual value
                     
                     DispatchQueue.main.async {
-                        print("Updating")
                         self.horizontalGraphView.data = data
-                        
                         self.horizontalGraphView.notifyDataSetChanged()
                         
                         self.verticalGraphView.data = ydata
