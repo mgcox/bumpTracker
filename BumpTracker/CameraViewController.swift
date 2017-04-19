@@ -176,7 +176,7 @@ class CameraViewController: UIViewController {
         
         getPreviousPhotoSumData()
         
-        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateGraph), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(updateGraph), userInfo: nil, repeats: true)
     }
     
     func getPreviousPhotoSumData(){
@@ -329,7 +329,7 @@ class CameraViewController: UIViewController {
     }
     
     func sumProfile(photo: UIImage, axis: String) -> [Double]{
-        let start = DispatchTime.now()
+//        let start = DispatchTime.now()
         
         var grayScaledImage = [Int]()
         var dataArray = [Double]()
@@ -337,8 +337,8 @@ class CameraViewController: UIViewController {
         let size = photo.size
         let width = Int(size.width)
         let height = Int(size.height)
-        print("Width: " + String(width))
-        print("Height: " + String(height))
+//        print("Width: " + String(width))
+//        print("Height: " + String(height))
         let dataSize = size.width * size.height * 4
         var pixelData = [UInt8](repeating: 0, count: Int(dataSize))
         let colorSpace = CGColorSpaceCreateDeviceRGB()
@@ -352,20 +352,6 @@ class CameraViewController: UIViewController {
         guard let cgImage = photo.cgImage else { return dataArray}
         context?.draw(cgImage, in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
         
-        // B&W
-        for i in 0...(width-1) {
-//            if(i%100 == 0){
-            for j in 0...(height-1) {
-                let offset = 4 * ((width * Int(j)) + Int(i))
-                let red = pixelData[offset+1]
-                let green = pixelData[offset+2]
-                let blue = pixelData[offset+3]
-                let avg = (Int(red) + Int(green) + Int(blue)) / 3
-                grayScaledImage.append(avg)
-            }
-//            }
-        }
-//        print("Avg", grayScaledImage, "End avg")
         
         // SUM
         if axis == "x"{
@@ -373,34 +359,38 @@ class CameraViewController: UIViewController {
                 if(j%100 == 0){
                     var tempSum = 0
                     for i in 0...(width-1) {
-                        let offset = ((width * Int(j)) + Int(i)%(width-1))
-                        // Sum along the axis.
-                        tempSum += grayScaledImage[offset]
-                        }
-                    // Append to sum array.
+                        let offset = 4 * ((width * Int(j)) + Int(i))
+                        let red = pixelData[offset+1]
+                        let green = pixelData[offset+2]
+                        let blue = pixelData[offset+3]
+                        tempSum += (Int(red) + Int(green) + Int(blue)) / 3
+                    }
                     dataArray.append(Double(tempSum))
                 }
             }
         } else if axis == "y"{
-            for i in 0...(width-1){
+            for i in 0...(width-1) {
                 if(i%100 == 0){
                     var tempSum = 0
-                    for j in 0...(height-1){
-                        let offset = ((width * Int(j) + Int(i)%(width-1)))
-                        tempSum += grayScaledImage[offset]
+                    for j in 0...(height-1) {
+                        let offset = 4 * ((width * Int(j)) + Int(i))
+                        let red = pixelData[offset+1]
+                        let green = pixelData[offset+2]
+                        let blue = pixelData[offset+3]
+                        tempSum += (Int(red) + Int(green) + Int(blue)) / 3
                     }
                     dataArray.append(Double(tempSum))
                 }
             }
         }
         
-        if self.DEBUG{
-            let end = DispatchTime.now()
-            let diff = Double(end.uptimeNanoseconds - start.uptimeNanoseconds) / 1_000_000_000 // Gives seconds
-            print("Sum finished in \(diff) seconds.")
-        }
+//        if self.DEBUG{
+//            let end = DispatchTime.now()
+//            let diff = Double(end.uptimeNanoseconds - start.uptimeNanoseconds) / 1_000_000_000 // Gives seconds
+//            print("Sum finished in \(diff) seconds.")
+//        }
         
-        return dataArray
+        return dataArray.reversed()
     }
     
     func updateGraph(){
