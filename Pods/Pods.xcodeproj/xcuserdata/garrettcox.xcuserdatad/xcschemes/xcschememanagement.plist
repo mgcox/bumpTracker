@@ -9,11 +9,6 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>CorePlot.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>Pods-BumpTracker.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -32,27 +27,22 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>06782A8D1318E6FB6E5EBB896A8C9572</key>
+		<key>331B28EBFA1C2DD622C0D9937199C701</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>07C004EE9675A950E771D1109A09AE79</key>
+		<key>3BD20F7775156B5DBAB3EF92043F6EA7</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>2845A7AB630D460A7BB6FD475CB323F4</key>
+		<key>F307B842FF76B2DE6C55DB67C0885325</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>810356E6275B5BE909622D6BDE10515D</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>DD8D88E11F267207CF0EBFCDF88353B2</key>
+		<key>F552C9BA5FB8BAA6F756656B0FB02DC6</key>
 		<dict>
 			<key>primary</key>
 			<true/>

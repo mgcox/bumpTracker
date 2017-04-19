@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16D32" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="055-XQ-eIN">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16E195" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="055-XQ-eIN">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -237,8 +237,8 @@
                         <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pZE-20-jyv">
-                                <rect key="frame" x="16" y="599" width="343" height="60"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pZE-20-jyv">
+                                <rect key="frame" x="0.0" y="535" width="375" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="OwY-Gn-b3r"/>
                                 </constraints>
@@ -267,33 +267,35 @@
                                 <rect key="frame" x="16" y="8" width="343" height="57"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="57" id="K9N-sM-N8B"/>
+                                    <constraint firstAttribute="height" constant="57" id="MXl-qA-tCJ"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rYQ-v5-uW8" customClass="LineChartView" customModule="Charts">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rYQ-v5-uW8" customClass="LineChartView" customModule="Charts">
                                 <rect key="frame" x="295" y="65" width="64" height="462"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="64" id="t5K-Rg-HPe"/>
+                                    <constraint firstAttribute="width" constant="64" id="qb6-4E-SlT"/>
                                 </constraints>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="H8i-1Y-YTk" firstAttribute="leading" secondItem="Rac-Qc-qBa" secondAttribute="leading" constant="16" id="1Oh-vL-eBJ"/>
                             <constraint firstItem="pZE-20-jyv" firstAttribute="top" secondItem="iea-7r-eLC" secondAttribute="bottom" constant="8" id="53U-Kx-VCv"/>
                             <constraint firstItem="pZE-20-jyv" firstAttribute="centerX" secondItem="Rac-Qc-qBa" secondAttribute="centerX" id="7b1-VS-iwi"/>
                             <constraint firstAttribute="trailing" secondItem="pZE-20-jyv" secondAttribute="trailing" id="7dW-cE-46g"/>
                             <constraint firstItem="iea-7r-eLC" firstAttribute="trailing" secondItem="Rac-Qc-qBa" secondAttribute="trailingMargin" id="86h-ac-nE3"/>
-                            <constraint firstAttribute="trailing" secondItem="H8i-1Y-YTk" secondAttribute="trailing" constant="16" id="GCk-Rn-SOd"/>
+                            <constraint firstItem="H8i-1Y-YTk" firstAttribute="leading" secondItem="Rac-Qc-qBa" secondAttribute="leadingMargin" id="8xu-eg-osC"/>
+                            <constraint firstItem="rYQ-v5-uW8" firstAttribute="top" secondItem="H8i-1Y-YTk" secondAttribute="bottom" id="Cnv-AR-JY6"/>
                             <constraint firstItem="pZE-20-jyv" firstAttribute="leading" secondItem="Rac-Qc-qBa" secondAttribute="leading" id="IZ2-kE-kzL"/>
-                            <constraint firstItem="rYQ-v5-uW8" firstAttribute="top" secondItem="H8i-1Y-YTk" secondAttribute="bottom" id="bW4-s5-g6A"/>
+                            <constraint firstItem="H8i-1Y-YTk" firstAttribute="trailing" secondItem="Rac-Qc-qBa" secondAttribute="trailingMargin" id="Rq4-8p-MOs"/>
                             <constraint firstItem="1NH-0V-SAN" firstAttribute="top" secondItem="pZE-20-jyv" secondAttribute="bottom" constant="8" id="beK-pd-the"/>
+                            <constraint firstItem="H8i-1Y-YTk" firstAttribute="centerX" secondItem="Rac-Qc-qBa" secondAttribute="centerX" id="dv8-S5-mlc"/>
                             <constraint firstItem="iea-7r-eLC" firstAttribute="top" secondItem="HvJ-38-I3M" secondAttribute="bottom" constant="8" id="e4Y-2U-KvY"/>
-                            <constraint firstItem="H8i-1Y-YTk" firstAttribute="top" secondItem="HvJ-38-I3M" secondAttribute="bottom" constant="8" id="jjb-Mr-7hX"/>
+                            <constraint firstItem="pZE-20-jyv" firstAttribute="top" secondItem="rYQ-v5-uW8" secondAttribute="bottom" constant="8" id="ktY-PI-l2x"/>
                             <constraint firstItem="iea-7r-eLC" firstAttribute="centerX" secondItem="Rac-Qc-qBa" secondAttribute="centerX" id="mG0-nC-hwI"/>
-                            <constraint firstAttribute="trailing" secondItem="rYQ-v5-uW8" secondAttribute="trailing" constant="16" id="syS-mS-0YU"/>
+                            <constraint firstItem="rYQ-v5-uW8" firstAttribute="trailing" secondItem="Rac-Qc-qBa" secondAttribute="trailingMargin" id="mhR-fM-1sy"/>
                             <constraint firstItem="iea-7r-eLC" firstAttribute="leading" secondItem="Rac-Qc-qBa" secondAttribute="leadingMargin" id="ylC-kb-Wsw"/>
+                            <constraint firstItem="H8i-1Y-YTk" firstAttribute="top" secondItem="HvJ-38-I3M" secondAttribute="bottom" constant="8" id="zCo-BQ-pnD"/>
                         </constraints>
                     </view>
                     <connections>

@@ -95,7 +95,7 @@ class CameraViewController: UIViewController {
         self.horizontalGraphView.chartDescription = nil
         self.horizontalGraphView.drawMarkers = false
         self.horizontalGraphView.minOffset = 0.0
-        
+        self.horizontalGraphView.backgroundColor = UIColor.init(white: 0.0, alpha: 0.3)
         
         self.verticalGraphView.xAxis.drawGridLinesEnabled = false
         self.verticalGraphView.xAxis.drawLabelsEnabled = false
@@ -109,9 +109,15 @@ class CameraViewController: UIViewController {
         self.verticalGraphView.chartDescription = nil
         self.verticalGraphView.drawMarkers = false
         self.verticalGraphView.minOffset = 0.0
+        self.verticalGraphView.backgroundColor = UIColor.init(white: 0.0, alpha: 0.3)
         
         self.horizontalGraphView.autoScaleMinMaxEnabled = true
         self.horizontalGraphView.xAxis.granularityEnabled = true
+        
+        
+        self.verticalGraphView.autoScaleMinMaxEnabled = true
+        self.verticalGraphView.xAxis.granularityEnabled = true
+        
 //        self.horizontalGraphView.xAxis.granularity = 3
         
     }
@@ -197,6 +203,7 @@ class CameraViewController: UIViewController {
         
         self.previousPhotoXdata = LineChartDataSet( values: entries, label: "")
         self.previousPhotoXdata.lineWidth = LINE_WIDTH
+        self.previousPhotoXdata.colors = [UIColor.green]
         self.previousPhotoXdata.circleRadius = LINE_WIDTH/2
         
         
@@ -211,6 +218,7 @@ class CameraViewController: UIViewController {
         
         self.previousPhotoYdata = LineChartDataSet( values: yentries, label: "")
         self.previousPhotoYdata.lineWidth = LINE_WIDTH
+        self.previousPhotoYdata.colors = [UIColor.green]
         self.previousPhotoYdata.circleRadius = LINE_WIDTH/2
 
         
