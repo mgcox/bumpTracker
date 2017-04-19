@@ -263,18 +263,18 @@
                                     <constraint firstItem="KZs-1o-ayn" firstAttribute="top" secondItem="iea-7r-eLC" secondAttribute="top" id="eFd-Yt-mGe"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rYQ-v5-uW8" customClass="LineChartView" customModule="Charts">
-                                <rect key="frame" x="295" y="65" width="64" height="462"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="64" id="t5K-Rg-HPe"/>
-                                </constraints>
-                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="H8i-1Y-YTk" customClass="LineChartView" customModule="Charts">
                                 <rect key="frame" x="16" y="8" width="343" height="57"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="57" id="K9N-sM-N8B"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rYQ-v5-uW8" customClass="LineChartView" customModule="Charts">
+                                <rect key="frame" x="295" y="65" width="64" height="462"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="64" id="t5K-Rg-HPe"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -287,12 +287,12 @@
                             <constraint firstItem="iea-7r-eLC" firstAttribute="trailing" secondItem="Rac-Qc-qBa" secondAttribute="trailingMargin" id="86h-ac-nE3"/>
                             <constraint firstAttribute="trailing" secondItem="H8i-1Y-YTk" secondAttribute="trailing" constant="16" id="GCk-Rn-SOd"/>
                             <constraint firstItem="pZE-20-jyv" firstAttribute="leading" secondItem="Rac-Qc-qBa" secondAttribute="leading" id="IZ2-kE-kzL"/>
-                            <constraint firstItem="rYQ-v5-uW8" firstAttribute="trailing" secondItem="Rac-Qc-qBa" secondAttribute="trailingMargin" id="MEr-iu-ZtT"/>
                             <constraint firstItem="rYQ-v5-uW8" firstAttribute="top" secondItem="H8i-1Y-YTk" secondAttribute="bottom" id="bW4-s5-g6A"/>
                             <constraint firstItem="1NH-0V-SAN" firstAttribute="top" secondItem="pZE-20-jyv" secondAttribute="bottom" constant="8" id="beK-pd-the"/>
                             <constraint firstItem="iea-7r-eLC" firstAttribute="top" secondItem="HvJ-38-I3M" secondAttribute="bottom" constant="8" id="e4Y-2U-KvY"/>
                             <constraint firstItem="H8i-1Y-YTk" firstAttribute="top" secondItem="HvJ-38-I3M" secondAttribute="bottom" constant="8" id="jjb-Mr-7hX"/>
                             <constraint firstItem="iea-7r-eLC" firstAttribute="centerX" secondItem="Rac-Qc-qBa" secondAttribute="centerX" id="mG0-nC-hwI"/>
+                            <constraint firstAttribute="trailing" secondItem="rYQ-v5-uW8" secondAttribute="trailing" constant="16" id="syS-mS-0YU"/>
                             <constraint firstItem="iea-7r-eLC" firstAttribute="leading" secondItem="Rac-Qc-qBa" secondAttribute="leadingMargin" id="ylC-kb-Wsw"/>
                         </constraints>
                     </view>
