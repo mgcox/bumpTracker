@@ -182,7 +182,7 @@ class CameraViewController: UIViewController {
     func getPreviousPhotoSumData(){
         print("Setting previous photo data")
         
-        let xaxisArray = self.sumProfile(photo: self.previousPhoto!, axis:"x")
+        let (xaxisArray, verticalArray) = self.sumProfile(photo: self.previousPhoto!, axis:"x")
         
         
         var entries = [ BarChartDataEntry]()
@@ -199,9 +199,6 @@ class CameraViewController: UIViewController {
         self.previousPhotoXdata.lineWidth = LINE_WIDTH
         self.previousPhotoXdata.circleRadius = LINE_WIDTH
         
-        
-        print("Y")
-        let verticalArray = self.sumProfile(photo: self.previousPhoto!, axis:"y")
         
         var yentries = [ BarChartDataEntry]()
         for (i, v) in verticalArray.enumerated() {
@@ -271,9 +268,9 @@ class CameraViewController: UIViewController {
                     monochromeFilter?.setValue(1.0, forKey:kCIInputIntensityKey)
     
                     // Use the playground to peek at the image now
-                    let outputCIImage = monochromeFilter?.outputImage
+//                    let outputCIImage = monochromeFilter?.outputImage
                     
-                    let monochromeVersion = UIImage(ciImage: outputCIImage!, scale: 1.0, orientation: .right)
+//                    let monochromeVersion = UIImage(ciImage: outputCIImage!, scale: 1.0, orientation: .right)
  
                     
                     
@@ -328,11 +325,11 @@ class CameraViewController: UIViewController {
         
     }
     
-    func sumProfile(photo: UIImage, axis: String) -> [Double]{
+    func sumProfile(photo: UIImage, axis: String) -> ([Double],[Double]){
 //        let start = DispatchTime.now()
         
-        var grayScaledImage = [Int]()
-        var dataArray = [Double]()
+        var xDataArray = [Double]()
+        var yDataArray = [Double]()
     
         let size = photo.size
         let width = Int(size.width)
@@ -349,37 +346,37 @@ class CameraViewController: UIViewController {
                                 bytesPerRow: 4 * Int(size.width),
                                 space: colorSpace,
                                 bitmapInfo: CGImageAlphaInfo.noneSkipLast.rawValue)
-        guard let cgImage = photo.cgImage else { return dataArray}
+        guard let cgImage = photo.cgImage else { return (xDataArray, yDataArray)}
         context?.draw(cgImage, in: CGRect(x: 0, y: 0, width: size.width, height: size.height))
         
         
         // SUM
         if axis == "x"{
-            for j in 0...(height-1) {
+            for j in stride(from: (height - 1), to: 0, by: -1) {
                 if(j%100 == 0){
                     var tempSum = 0
-                    for i in 0...(width-1) {
+                    for i in stride(from: (width - 1), to: 0, by: -1) {
                         let offset = 4 * ((width * Int(j)) + Int(i))
                         let red = pixelData[offset+1]
                         let green = pixelData[offset+2]
                         let blue = pixelData[offset+3]
                         tempSum += (Int(red) + Int(green) + Int(blue)) / 3
                     }
-                    dataArray.append(Double(tempSum))
+                    xDataArray.append(Double(tempSum))
                 }
             }
         } else if axis == "y"{
-            for i in 0...(width-1) {
+            for i in stride(from: (width - 1), to: 0, by: -1) {
                 if(i%100 == 0){
                     var tempSum = 0
-                    for j in 0...(height-1) {
+                    for j in stride(from: (height - 1), to: 0, by: -1) {
                         let offset = 4 * ((width * Int(j)) + Int(i))
                         let red = pixelData[offset+1]
                         let green = pixelData[offset+2]
                         let blue = pixelData[offset+3]
                         tempSum += (Int(red) + Int(green) + Int(blue)) / 3
                     }
-                    dataArray.append(Double(tempSum))
+                    yDataArray.append(Double(tempSum))
                 }
             }
         }
@@ -390,7 +387,7 @@ class CameraViewController: UIViewController {
 //            print("Sum finished in \(diff) seconds.")
 //        }
         
-        return dataArray.reversed()
+        return (xDataArray, yDataArray)
     }
     
     func updateGraph(){
@@ -398,9 +395,8 @@ class CameraViewController: UIViewController {
             {
                 
                 self.getSnapShot(completion: { (snappedImage) in
-                    print("X")
                     
-                    let xaxisArray = self.sumProfile(photo: snappedImage, axis:"x")
+                    let (xaxisArray, verticalArray) = self.sumProfile(photo: snappedImage, axis:"x")
                     
                     
                     var entries = [ BarChartDataEntry]()
@@ -419,9 +415,6 @@ class CameraViewController: UIViewController {
                     //let data = LineChartData( dataSet: set)
                     let data = LineChartData(dataSets: [set,self.previousPhotoXdata])
                     data.setDrawValues(false) // Don't draw labels on each individual value
-                    
-                    print("Y")
-                    let verticalArray = self.sumProfile(photo: snappedImage, axis:"y")
                     
                     var yentries = [ BarChartDataEntry]()
                     for (i, v) in verticalArray.enumerated() {
