@@ -197,7 +197,7 @@ class CameraViewController: UIViewController {
         
         self.previousPhotoXdata = LineChartDataSet( values: entries, label: "")
         self.previousPhotoXdata.lineWidth = LINE_WIDTH
-        self.previousPhotoXdata.circleRadius = LINE_WIDTH
+        self.previousPhotoXdata.circleRadius = LINE_WIDTH/2
         
         
         var yentries = [ BarChartDataEntry]()
@@ -211,7 +211,7 @@ class CameraViewController: UIViewController {
         
         self.previousPhotoYdata = LineChartDataSet( values: yentries, label: "")
         self.previousPhotoYdata.lineWidth = LINE_WIDTH
-        self.previousPhotoYdata.circleRadius = LINE_WIDTH
+        self.previousPhotoYdata.circleRadius = LINE_WIDTH/2
 
         
     }
@@ -411,7 +411,7 @@ class CameraViewController: UIViewController {
                     
                     let set = LineChartDataSet( values: entries, label: "")
                     set.lineWidth = self.LINE_WIDTH
-                    set.circleRadius = self.LINE_WIDTH
+                    set.circleRadius = self.LINE_WIDTH/2
                     //let data = LineChartData( dataSet: set)
                     let data = LineChartData(dataSets: [set,self.previousPhotoXdata])
                     data.setDrawValues(false) // Don't draw labels on each individual value
@@ -428,7 +428,7 @@ class CameraViewController: UIViewController {
                     
                     let yset = LineChartDataSet( values: yentries, label: "")
                     yset.lineWidth = self.LINE_WIDTH
-                    yset.circleRadius = self.LINE_WIDTH
+                    yset.circleRadius = self.LINE_WIDTH/2
                     let ydata = LineChartData(dataSets: [yset,self.previousPhotoYdata])
                     ydata.setDrawValues(false) // Don't draw labels on each individual value
                     
