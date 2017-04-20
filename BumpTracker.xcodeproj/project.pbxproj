@@ -20,6 +20,7 @@
 		949ACE871E54D556005FCC71 /* BumpTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949ACE861E54D556005FCC71 /* BumpTrackerTests.swift */; };
 		949ACE921E54D556005FCC71 /* BumpTrackerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949ACE911E54D556005FCC71 /* BumpTrackerUITests.swift */; };
 		949EA2361E82E3CC0045C1FA /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949EA2351E82E3CC0045C1FA /* CameraViewController.swift */; };
+		94C88CB91EA92E3F002AEC17 /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94C88CB81EA92E3F002AEC17 /* PreviewViewController.swift */; };
 		94C891771E9742DC009CD07B /* OpenCVWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 94C891761E9742DC009CD07B /* OpenCVWrapper.mm */; };
 		D3C2C7BCA3A6075C2DD87EAC /* Pods_BumpTracker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1AC5D1AB096EC37A4263B644 /* Pods_BumpTracker.framework */; };
 		E3561FF1124AE51E8D0AD639 /* Pods_BumpTrackerUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3BF1A9CEBCB217289F0ED7B2 /* Pods_BumpTrackerUITests.framework */; };
@@ -80,6 +81,7 @@
 		949ACE931E54D556005FCC71 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		949BE85B1E9744EF005ED324 /* opencv2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = opencv2.framework; path = BumpTracker/opencv2.framework; sourceTree = "<group>"; };
 		949EA2351E82E3CC0045C1FA /* CameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
+		94C88CB81EA92E3F002AEC17 /* PreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
 		94C891741E9742DC009CD07B /* BumpTracker-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "BumpTracker-Bridging-Header.h"; sourceTree = "<group>"; };
 		94C891751E9742DC009CD07B /* OpenCVWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenCVWrapper.h; sourceTree = "<group>"; };
 		94C891761E9742DC009CD07B /* OpenCVWrapper.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = OpenCVWrapper.mm; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 				949ACE6E1E54D555005FCC71 /* AppDelegate.swift */,
 				949ACE701E54D555005FCC71 /* ViewController.swift */,
 				949ACE721E54D555005FCC71 /* Main.storyboard */,
+				94C88CB81EA92E3F002AEC17 /* PreviewViewController.swift */,
 				947F63461E9C294600046F9C /* PhotosTableViewCell.swift */,
 				949EA2351E82E3CC0045C1FA /* CameraViewController.swift */,
 				949ACE781E54D555005FCC71 /* Assets.xcassets */,
@@ -502,6 +505,7 @@
 				949ACE6F1E54D555005FCC71 /* AppDelegate.swift in Sources */,
 				94786B5D1E9C653D0081934A /* PhotoshootViewerVC.swift in Sources */,
 				949ACE771E54D555005FCC71 /* BumpTracker.xcdatamodeld in Sources */,
+				94C88CB91EA92E3F002AEC17 /* PreviewViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -152,6 +152,7 @@
                         <outlet property="photoListTableView" destination="7ul-Rr-cc4" id="xx5-4E-TDt"/>
                         <outlet property="weekLabel" destination="CD8-Ky-AqE" id="vqp-3X-fM2"/>
                         <segue destination="Lj4-NK-pNH" kind="show" identifier="viewPhoto" id="zhw-PN-Bbf"/>
+                        <segue destination="dBN-nY-THX" kind="show" identifier="previewGif" id="dCA-Zy-qbY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Uzd-jp-NV4" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -308,7 +309,39 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pwM-6a-AH0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1181.5999999999999" y="681.40929535232385"/>
+            <point key="canvasLocation" x="1198" y="515"/>
+        </scene>
+        <!--Preview View Controller-->
+        <scene sceneID="Ydi-5B-85y">
+            <objects>
+                <viewController id="dBN-nY-THX" customClass="PreviewViewController" customModule="BumpTracker" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y8r-9B-IZ3"/>
+                        <viewControllerLayoutGuide type="bottom" id="6EP-Gh-ZD7"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="WWt-g8-vMH">
+                        <rect key="frame" x="0.0" y="64" width="375" height="603"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6QI-iU-Z6i" customClass="uiweb">
+                                <rect key="frame" x="0.0" y="8" width="375" height="491"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="6QI-iU-Z6i" secondAttribute="trailing" id="fgo-h8-cSq"/>
+                            <constraint firstItem="6QI-iU-Z6i" firstAttribute="top" secondItem="y8r-9B-IZ3" secondAttribute="bottom" constant="8" id="iak-r3-SRa"/>
+                            <constraint firstItem="6QI-iU-Z6i" firstAttribute="leading" secondItem="WWt-g8-vMH" secondAttribute="leading" id="r8c-vS-X1C"/>
+                            <constraint firstItem="6EP-Gh-ZD7" firstAttribute="top" secondItem="6QI-iU-Z6i" secondAttribute="bottom" constant="104" id="svM-7M-Gr0"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="previewImageView" destination="6QI-iU-Z6i" id="9br-or-agK"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="FV2-4N-0rV" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1198" y="1200"/>
         </scene>
     </scenes>
     <resources>

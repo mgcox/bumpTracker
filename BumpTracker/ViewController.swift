@@ -25,6 +25,7 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
     var selectedPhotoShoot : PhotoShoot?
     
     var previousShoot : UIImage?
+    var gif : UIImage?
     
     let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     
@@ -249,6 +250,9 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
                 destVC.previousPhoto = previousShoot!
             }
             
+        }else if segue.identifier == "previewGif" {
+            let destVC = segue.destination as! PreviewViewController
+            destVC.previewImage = gif
         }
     }
     
@@ -271,6 +275,22 @@ class ViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate
                     if error == nil {
                         if success == true {
                             print("saved")
+                            
+                            
+                            do {
+                              // let imageData = try  Data(contentsOf: location! as URL)
+                                
+                                self.gif = UIImage.animatedImage(with: images, duration: 0.2*Double(images.count))
+                                
+                                
+                                self.performSegue(withIdentifier: "previewGif", sender: self)
+                            }catch{
+                                print("image problem")
+                            }
+                           
+                            
+                            
+                            
                         }
                     }
                 })
@@ -334,6 +354,10 @@ extension UIImage {
             return self
         }
     }
+    
+    
+
+    
 }
 
 
