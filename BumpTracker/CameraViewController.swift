@@ -33,6 +33,12 @@ class CameraViewController: UIViewController {
     var previousPhotoXdata = LineChartDataSet()
     var previousPhotoYdata = LineChartDataSet()
     
+    var previousPhotoXLength = 0
+    var previousPhotoYLength = 0
+    
+    var previousPhotoYArray = [Double()]
+    var previousPhotoXArray = [Double()]
+    
     let LINE_WIDTH = CGFloat(1.0)
     
     
@@ -205,6 +211,8 @@ class CameraViewController: UIViewController {
         self.previousPhotoXdata.lineWidth = LINE_WIDTH
         self.previousPhotoXdata.colors = [UIColor.green]
         self.previousPhotoXdata.circleRadius = LINE_WIDTH/2
+        self.previousPhotoXLength = xaxisArray.count
+        self.previousPhotoXArray = xaxisArray
         
         
         var yentries = [ BarChartDataEntry]()
@@ -220,6 +228,8 @@ class CameraViewController: UIViewController {
         self.previousPhotoYdata.lineWidth = LINE_WIDTH
         self.previousPhotoYdata.colors = [UIColor.green]
         self.previousPhotoYdata.circleRadius = LINE_WIDTH/2
+        self.previousPhotoYLength = verticalArray.count
+        self.previousPhotoYArray = verticalArray
 
         
     }
@@ -403,7 +413,28 @@ class CameraViewController: UIViewController {
                 self.getSnapShot(completion: { (snappedImage) in
                     
                     let (xaxisArray, verticalArray) = self.sumProfile(photo: snappedImage, axis:"x")
+//                    print("Y array: ", verticalArray)
+//                    print("Prev x length: ", self.previousPhotoXLength, " Current: ", xaxisArray.count)
+//                    print("Prev y length: ", self.previousPhotoYLength, " Current: ", verticalArray.count)
+                    //array.reduce(0,+)
+                    print(xaxisArray)
+                    print("Prev", self.previousPhotoXArray)
+                    var summedX = 0.0
+                    for i in 0...(xaxisArray.count-1) {
+                        summedX += (abs(xaxisArray[i] - self.previousPhotoXArray[i]))
+                    }
+                    print("Sum for horizontal graph: ", summedX)
+                    let avgVal = (xaxisArray.reduce(0,+)/Double(xaxisArray.count))
+                    let lowThreshold = 0.7 * avgVal
+                    let highThreshold = 1.3 * avgVal
+                    print("Thresholds", lowThreshold, " to " , highThreshold)
+                    if(summedX < highThreshold && summedX > lowThreshold){
+                        print("\n\nGood\n\n")
+                    }
                     
+                    for i in 0...(verticalArray.count-1) {
+                        summedX += (abs(verticalArray[i] - self.previousPhotoYArray[i]))
+                    }
                     
                     var entries = [ BarChartDataEntry]()
                     for (i, v) in xaxisArray.enumerated() {
@@ -445,9 +476,6 @@ class CameraViewController: UIViewController {
                         self.verticalGraphView.data = ydata
                         self.verticalGraphView.notifyDataSetChanged()
                     }
-                    
-                    
-                    
                 })
                 
         }
