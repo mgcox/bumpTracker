@@ -41,7 +41,7 @@ class CameraViewController: UIViewController {
     
     let LINE_WIDTH = CGFloat(1.0)
     
-    
+    var updatedBar = false
     var max = 100.0
     var min = 0.0
   //  var graph = CPTXYGraph(frame: CGRect.zero)
@@ -417,19 +417,31 @@ class CameraViewController: UIViewController {
 //                    print("Prev x length: ", self.previousPhotoXLength, " Current: ", xaxisArray.count)
 //                    print("Prev y length: ", self.previousPhotoYLength, " Current: ", verticalArray.count)
                     //array.reduce(0,+)
-                    print(xaxisArray)
-                    print("Prev", self.previousPhotoXArray)
+                   // print(xaxisArray)
+                    //print("Prev", self.previousPhotoXArray)
                     var summedX = 0.0
                     for i in 0...(xaxisArray.count-1) {
                         summedX += (abs(xaxisArray[i] - self.previousPhotoXArray[i]))
                     }
-                    print("Sum for horizontal graph: ", summedX)
+                   // print("Sum for horizontal graph: ", summedX)
                     let avgVal = (xaxisArray.reduce(0,+)/Double(xaxisArray.count))
-                    let lowThreshold = 0.7 * avgVal
-                    let highThreshold = 1.3 * avgVal
-                    print("Thresholds", lowThreshold, " to " , highThreshold)
+                    let lowThreshold = 0.2 * avgVal
+                    let highThreshold = 1.8 * avgVal
+                   // print("Thresholds", lowThreshold, " to " , highThreshold)
                     if(summedX < highThreshold && summedX > lowThreshold){
                         print("\n\nGood\n\n")
+                        self.updatedBar = true
+                        DispatchQueue.main.async {
+                            self.horizontalGraphView.backgroundColor = UIColor.green
+                        }
+                        
+                    }else{
+                        if self.updatedBar == true {
+                            DispatchQueue.main.async {
+                                self.horizontalGraphView.backgroundColor = UIColor.init(white: 0.0, alpha: 0.3)
+                            }
+
+                        }
                     }
                     
                     for i in 0...(verticalArray.count-1) {
